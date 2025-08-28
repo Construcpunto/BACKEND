@@ -11,10 +11,6 @@ public class LoanEquipmentEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private ClientEntity client;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "equipment_id")
     private EquipmentEntity equipment;
 
@@ -52,15 +48,6 @@ public class LoanEquipmentEntity {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public ClientEntity getClient() {
-        return client;
-    }
-
-    public void setClient(ClientEntity client) {
-        this.client = client;
-    }
-
 
     public Integer getQuantity() {
         return quantity;

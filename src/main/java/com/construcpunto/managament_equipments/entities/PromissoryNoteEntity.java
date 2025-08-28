@@ -16,6 +16,10 @@ public class PromissoryNoteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private ClientEntity client;
+
     @JsonIgnore
     @OneToMany(mappedBy = "promissoryNote", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanEquipmentEntity> loanEquipment;
@@ -47,6 +51,14 @@ public class PromissoryNoteEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ClientEntity getClient() {
+        return client;
+    }
+
+    public void setClient(ClientEntity client) {
+        this.client = client;
     }
 
     public List<LoanEquipmentEntity> getLoanEquipment() {

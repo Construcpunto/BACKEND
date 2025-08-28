@@ -31,10 +31,10 @@ public class ClientEntity {
     private String numberPhone;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<LoanEquipmentEntity> equipments;
+    private List<PromissoryNoteEntity> promissoryNotes;
 
     public ClientEntity() {
-         this.equipments = new ArrayList<>();
+         this.promissoryNotes = new ArrayList<>();
     }
 
     public Long getId() {
@@ -69,11 +69,11 @@ public class ClientEntity {
         this.numberPhone = numberPhone;
     }
 
-    public List<LoanEquipmentEntity> getEquipments() {
-        return equipments;
+    public List<PromissoryNoteEntity> getPromissoryNotes() {
+        return promissoryNotes;
     }
 
-    public void setEquipments(List<LoanEquipmentEntity> equipments) {
-        this.equipments = equipments;
+    public void setPromissoryNotes(List<PromissoryNoteEntity> promissoryNotes) {
+        this.promissoryNotes = promissoryNotes;
     }
 }

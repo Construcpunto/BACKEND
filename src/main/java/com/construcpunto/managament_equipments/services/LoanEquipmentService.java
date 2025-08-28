@@ -1,7 +1,6 @@
 package com.construcpunto.managament_equipments.services;
 
 import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
-import com.construcpunto.managament_equipments.dto.LoanEquipmentResponseDto;
 import com.construcpunto.managament_equipments.dto.viewLoanDto;
 import com.construcpunto.managament_equipments.entities.*;
 import com.construcpunto.managament_equipments.exceptions.RequestException;
@@ -35,8 +34,9 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
     @Override
     public ClientEntity save(LoanEquipmentRequestDto loanEquipmentRequestDto) {
-
         ClientEntity client;
+
+        PromissoryNoteEntity promissoryNote = new PromissoryNoteEntity();
 
         if (loanEquipmentRequestDto.getClientId() == 0L)
             client = loanEquipmentRequestDto.getClient();
@@ -44,36 +44,60 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             client = clientRepository.findById(loanEquipmentRequestDto.getClientId()).orElseThrow(
                     () -> new RequestException("El cliente no se encuentra registrado", HttpStatus.NOT_FOUND));
 
-        PromissoryNoteEntity promissoryNote = makePromissoryNote(loanEquipmentRequestDto);
-        promissoryNote = promissoyNoteRepository.save(promissoryNote);
+
+        System.out.println("-------------------------" + "  " + verifyStockBeforePromissoryNote(loanEquipmentRequestDto) + "  " + "-------------------------");
+        if (verifyStockBeforePromissoryNote(loanEquipmentRequestDto) > 0) {
+            promissoryNote = makePromissoryNote(loanEquipmentRequestDto);
+            promissoryNote.setClient(client);
+            promissoryNote = promissoyNoteRepository.save(promissoryNote);
 
 
-        Optional<EquipmentEntity> equipment;
-        LoanEquipmentEntity loanEquipment = new LoanEquipmentEntity();
+            for (Map.Entry<Long, Integer> entry : loanEquipmentRequestDto.getEquipmentIds().entrySet()) {
 
+                Optional<EquipmentEntity> equipment = Optional.of(new EquipmentEntity());
+                LoanEquipmentEntity loanEquipment = new LoanEquipmentEntity();
+
+                loanEquipment = new LoanEquipmentEntity();
+                equipment = Optional.of(new EquipmentEntity());
+                loanEquipment.setPromissoryNote(promissoryNote);
+
+                equipment = equipmentRepository.findById(entry.getKey());
+
+                if (equipment.isEmpty())
+                    throw new RequestException("El equipo no existe", HttpStatus.NOT_FOUND);
+                else {
+                    if (equipment.get().getQuantity() < entry.getValue())
+                        throw new RequestException("No hay la cantidad disponible para el equipo: " + equipment.get().getName(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    else {
+                        loanEquipment = loadLoanEquipment(loanEquipment, equipment.get(), entry.getValue());
+                    }
+                }
+                promissoryNote.getLoanEquipment().add(loanEquipment);
+
+            }
+        }
+
+        return clientRepository.save(client);
+    }
+
+    Integer verifyStockBeforePromissoryNote(LoanEquipmentRequestDto loanEquipmentRequestDto) {
+        Integer availableEquipments = 0;
+        Optional<EquipmentEntity> equipment = Optional.of(new EquipmentEntity());
 
         for (Map.Entry<Long, Integer> entry : loanEquipmentRequestDto.getEquipmentIds().entrySet()) {
-            loanEquipment = new LoanEquipmentEntity();
-            equipment = Optional.of(new EquipmentEntity());
-            loanEquipment.setClient(client);
-            loanEquipment.setPromissoryNote(promissoryNote);
-
             equipment = equipmentRepository.findById(entry.getKey());
 
             if (equipment.isEmpty())
                 throw new RequestException("El equipo no existe.", HttpStatus.NOT_FOUND);
             else {
-                if (equipment.get().getQuantity() < entry.getValue())
-                    throw new RequestException("No hay la cantidad de equipo disponible.", HttpStatus.INTERNAL_SERVER_ERROR);
-                else {
-                    loanEquipment = loadLoanEquipment(loanEquipment, equipment.get(), entry.getValue());
-                }
+                if (equipment.get().getQuantity() < entry.getValue()) {
+                    throw new RequestException("No hay la cantidad disponible para el equipo: " + equipment.get().getName(), HttpStatus.INTERNAL_SERVER_ERROR);
+                } else
+                    availableEquipments++;
             }
-            client.getEquipments().add(loanEquipment);
-
         }
 
-        return clientRepository.save(client);
+        return availableEquipments;
     }
 
     LoanEquipmentEntity loadLoanEquipment(LoanEquipmentEntity loanEquipment, EquipmentEntity equipment, Integer quantity) {
