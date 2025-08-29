@@ -35,6 +35,10 @@ public class LoanController {
         return ResponseEntity.ok(loanEquipmentService.findAll());
     }
 
+    @GetMapping("/find-loan")
+    public ResponseEntity<?> findByPromissory(@RequestParam Long promissoryId){
+        return ResponseEntity.ok(loanEquipmentService.findByPromissoryId(promissoryId));
+    }
 
     private ResponseEntity<?> validation(BindingResult result) {
         Map<String, String> errors = new HashMap<>();

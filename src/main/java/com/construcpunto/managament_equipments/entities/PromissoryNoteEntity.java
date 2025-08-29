@@ -20,7 +20,6 @@ public class PromissoryNoteEntity {
     @JoinColumn(name = "client_id")
     private ClientEntity client;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "promissoryNote", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanEquipmentEntity> loanEquipment;
 

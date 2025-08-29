@@ -1,6 +1,7 @@
 package com.construcpunto.managament_equipments.services;
 
 import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
+import com.construcpunto.managament_equipments.dto.LoanEquipmentResponseDto;
 import com.construcpunto.managament_equipments.dto.viewLoanDto;
 import com.construcpunto.managament_equipments.entities.*;
 import com.construcpunto.managament_equipments.exceptions.RequestException;
@@ -145,7 +146,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
 
         for (int i = 0; i < loanEquipments.size(); i++) {
-            int indexViewLoanDto = 0;
             viewLoanDto = new viewLoanDto();
             idPromissoryNote = loanEquipments.get(i).getPromissoryNote().getId();
 
@@ -157,8 +157,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             if (!idPromissoryNote.equals(idPrommissoryNoteBack)) {
                 viewLoanDto.setCedula(clientId);
                 viewLoanDto.setClientName(clientName);
-                viewLoanDto.setReturn(isReturn);
                 viewLoanDto.getEquipmentName().add(equipmentName);
+                viewLoanDto.setPromissoryNoteId(idPromissoryNote);
 
                 viewLoanDtos.add(viewLoanDto);
 
@@ -166,18 +166,55 @@ public class LoanEquipmentService implements ILoanEquipmentService {
                 viewLoanDtos.getLast().getEquipmentName().add(equipmentName);
             }
 
-            System.out.println("-------------------------" + "  " + loanEquipments.get(i).getPromissoryNote().getId() + "/" + idPrommissoryNoteBack.intValue() + "  " + "-------------------------");
+//            System.out.println("-------------------------" + "  " + loanEquipments.get(i).getPromissoryNote().getId() + "/" + idPrommissoryNoteBack.intValue() + "  " + "-------------------------");
             idPrommissoryNoteBack = loanEquipments.get(i).getPromissoryNote().getId();
 
         }
-
 
         return viewLoanDtos;
     }
 
     @Override
-    public Optional<LoanEquipmentEntity> findById(Long id) {
-        return loanEquipmentRepository.findById(id);
+    public LoanEquipmentResponseDto findByPromissoryId(Long promissoryId) {
+
+        PromissoryNoteEntity promissoryNote = promissoyNoteRepository.findById(promissoryId).orElseThrow
+                (() -> new RequestException("El cliente no tiene pagares pendientes", HttpStatus.NOT_FOUND));
+
+
+        ClientEntity client = promissoryNote.getClient();
+
+        DeliveryEntity delivery = promissoryNote.getDelivery();
+
+        List<LoanEquipmentEntity> loanEquipments = promissoryNote.getLoanEquipment();
+
+        LoanEquipmentResponseDto loanEquipmentResponse = new LoanEquipmentResponseDto(loanEquipments.size());
+
+        String[][] equipments = new String[loanEquipments.size()][5];;
+
+        for (int i = 0; i < loanEquipments.size(); i++) {
+            equipments[i][0] = loanEquipments.get(i).getQuantity().toString();
+            equipments[i][1] = loanEquipments.get(i).getEquipment().getName();
+            equipments[i][2] = String.valueOf(loanEquipments.get(i).getEquipment().getUnitPrice());
+            equipments[i][3] = loanEquipments.get(i).getPriceDay().toString();
+            equipments[i][4] = loanEquipments.get(i).getTotal().toString();
+        }
+
+        loanEquipmentResponse.setClientId(client.getId());
+        loanEquipmentResponse.setClientName(client.getName());
+        loanEquipmentResponse.setAddressClient(client.getAddress());
+        loanEquipmentResponse.setNumberPhone(client.getNumberPhone());
+
+        loanEquipmentResponse.setDeliveryName(delivery.getName());
+
+        loanEquipmentResponse.setDeliveryDate(promissoryNote.getDeliveryDate());
+        loanEquipmentResponse.setDeposit(promissoryNote.getDeposit());
+        loanEquipmentResponse.setDeliveryPrice(promissoryNote.getDeliveryPrice());
+        loanEquipmentResponse.setLoanEquipments(equipments);
+        loanEquipmentResponse.setComments(loanEquipmentResponse.getComments());
+
+
+
+        return loanEquipmentResponse;
     }
 
     @Override

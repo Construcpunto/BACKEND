@@ -7,35 +7,64 @@ import java.time.LocalDateTime;
 
 public class LoanEquipmentResponseDto {
 
-    private ClientEntity client;
-    private DeliveryEntity delivery;
+    private Long clientId;
+    private String clientName;
+    private String addressClient;
+    private String numberPhone;
+    private String deliveryName;
+
     private LocalDateTime deliveryDate;
     private LocalDateTime deliveryReturn;
+
     private Double deposit;
     private Double deliveryPrice;
     private String[][] loanEquipments;
     private Integer totalDays;
     private Double total;
-
+    private String comments;
 
     public LoanEquipmentResponseDto(int rows) {
         this.loanEquipments = new String[rows][5];
     }
 
-    public ClientEntity getClient() {
-        return client;
+    public Long getClientId() {
+        return clientId;
     }
 
-    public void setClient(ClientEntity client) {
-        this.client = client;
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 
-    public DeliveryEntity getDelivery() {
-        return delivery;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setDelivery(DeliveryEntity delivery) {
-        this.delivery = delivery;
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getAddressClient() {
+        return addressClient;
+    }
+
+    public void setAddressClient(String addressClient) {
+        this.addressClient = addressClient;
+    }
+
+    public String getNumberPhone() {
+        return numberPhone;
+    }
+
+    public void setNumberPhone(String numberPhone) {
+        this.numberPhone = numberPhone;
+    }
+
+    public String getDeliveryName() {
+        return deliveryName;
+    }
+
+    public void setDeliveryName(String deliveryName) {
+        this.deliveryName = deliveryName;
     }
 
     public LocalDateTime getDeliveryDate() {
@@ -92,5 +121,13 @@ public class LoanEquipmentResponseDto {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

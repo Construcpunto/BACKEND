@@ -8,7 +8,7 @@ public class viewLoanDto {
     private Long cedula;
     private String clientName;
     private List<String> equipmentName;
-    private Boolean isReturn;
+    private Long promissoryNoteId;
 
     public viewLoanDto() {
         this.equipmentName = new ArrayList<>();
@@ -38,11 +38,11 @@ public class viewLoanDto {
         this.equipmentName = equipmentName;
     }
 
-    public Boolean getReturn() {
-        return isReturn;
+    public Long getPromissoryNoteId() {
+        return promissoryNoteId;
     }
 
-    public void setReturn(Boolean aReturn) {
-        isReturn = aReturn;
+    public void setPromissoryNoteId(Long promissoryNoteId) {
+        this.promissoryNoteId = promissoryNoteId;
     }
 }
