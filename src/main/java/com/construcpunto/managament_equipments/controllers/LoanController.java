@@ -21,7 +21,7 @@ public class LoanController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<?> save(@Valid @RequestBody LoanEquipmentRequestDto loanEquipmentRequestDto, BindingResult result){
+    public ResponseEntity<?> save(@Valid @RequestBody LoanEquipmentRequestDto loanEquipmentRequestDto, BindingResult result) {
         if (result.hasFieldErrors()) {
             return validation(result);
         }
@@ -31,11 +31,9 @@ public class LoanController {
 
 
     @GetMapping("/find-all")
-    public ResponseEntity<?> findAll(){
-
-        return null;
+    public ResponseEntity<?> findAll() {
+        return ResponseEntity.ok(loanEquipmentService.findAll());
     }
-
 
 
     private ResponseEntity<?> validation(BindingResult result) {

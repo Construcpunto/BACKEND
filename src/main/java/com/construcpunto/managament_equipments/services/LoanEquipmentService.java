@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -45,7 +47,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
                     () -> new RequestException("El cliente no se encuentra registrado", HttpStatus.NOT_FOUND));
 
 
-        System.out.println("-------------------------" + "  " + verifyStockBeforePromissoryNote(loanEquipmentRequestDto) + "  " + "-------------------------");
         if (verifyStockBeforePromissoryNote(loanEquipmentRequestDto) > 0) {
             promissoryNote = makePromissoryNote(loanEquipmentRequestDto);
             promissoryNote.setClient(client);
@@ -133,9 +134,45 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
     @Override
     public List<viewLoanDto> findAll() {
+        Long idPrommissoryNoteBack = 0L;
+        Long idPromissoryNote = 0L;
+
+        viewLoanDto viewLoanDto = new viewLoanDto();
+        List<viewLoanDto> viewLoanDtos = new ArrayList<>();
         List<LoanEquipmentEntity> loanEquipments = loanEquipmentRepository.findAll();
 
-        return List.of();
+        System.out.println("-------------------------" + loanEquipments.size() + "-------------------------");
+
+
+        for (int i = 0; i < loanEquipments.size(); i++) {
+            int indexViewLoanDto = 0;
+            viewLoanDto = new viewLoanDto();
+            idPromissoryNote = loanEquipments.get(i).getPromissoryNote().getId();
+
+            Long clientId = loanEquipments.get(i).getPromissoryNote().getClient().getId();
+            String clientName = loanEquipments.get(i).getPromissoryNote().getClient().getName();
+            Boolean isReturn = loanEquipments.get(i).getEquipmentReturn();
+            String equipmentName = loanEquipments.get(i).getEquipment().getName();
+
+            if (!idPromissoryNote.equals(idPrommissoryNoteBack)) {
+                viewLoanDto.setCedula(clientId);
+                viewLoanDto.setClientName(clientName);
+                viewLoanDto.setReturn(isReturn);
+                viewLoanDto.getEquipmentName().add(equipmentName);
+
+                viewLoanDtos.add(viewLoanDto);
+
+            } else {
+                viewLoanDtos.getLast().getEquipmentName().add(equipmentName);
+            }
+
+            System.out.println("-------------------------" + "  " + loanEquipments.get(i).getPromissoryNote().getId() + "/" + idPrommissoryNoteBack.intValue() + "  " + "-------------------------");
+            idPrommissoryNoteBack = loanEquipments.get(i).getPromissoryNote().getId();
+
+        }
+
+
+        return viewLoanDtos;
     }
 
     @Override

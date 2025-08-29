@@ -1,5 +1,6 @@
 package com.construcpunto.managament_equipments.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class viewLoanDto {
@@ -10,6 +11,7 @@ public class viewLoanDto {
     private Boolean isReturn;
 
     public viewLoanDto() {
+        this.equipmentName = new ArrayList<>();
     }
 
     public Long getCedula() {
