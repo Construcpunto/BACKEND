@@ -36,6 +36,7 @@ public class EquipmentEntity {
     @NotNull
     private Integer total;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "equipment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanEquipmentEntity> clients;
 
