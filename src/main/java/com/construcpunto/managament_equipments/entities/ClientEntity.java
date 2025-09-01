@@ -31,6 +31,7 @@ public class ClientEntity {
     @Size(max = 50)
     private String numberPhone;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PromissoryNoteEntity> promissoryNotes;
 

@@ -27,6 +27,16 @@ public class ClientController {
         return ResponseEntity.ok(clientService.findAll());
     }
 
+    @GetMapping("/find-by-{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        Optional<ClientEntity> clientOptional = clientService.findById(id);
+
+        if(clientOptional.isPresent())
+            return ResponseEntity.ok(clientOptional.get());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @RequestBody ClientEntity client, BindingResult result) {
         if (result.hasFieldErrors()) {
