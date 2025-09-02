@@ -11,6 +11,7 @@ import java.util.List;
 public interface ILoanEquipmentService {
 
     ClientEntity save(LoanEquipmentRequestDto loanEquipmentRequestDto);
+    void returnEquipment(Long promissoryNoteId);
     List<viewLoanDto> findAll();
     LoanEquipmentResponseDto findByPromissoryId(Long promissoryId);
     void delete(LoanEquipmentEntity loanEquipment);

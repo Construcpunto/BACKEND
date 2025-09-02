@@ -107,4 +107,5 @@ public class PromissoryNoteEntity {
     public void setComments(String comments) {
         this.comments = comments;
     }
+
 }

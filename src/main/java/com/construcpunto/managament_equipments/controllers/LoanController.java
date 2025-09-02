@@ -30,6 +30,13 @@ public class LoanController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
+    @PostMapping("return-equipment/{promissoryNoteId}")
+    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId){
+
+        loanEquipmentService.returnEquipment(promissoryNoteId);
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {

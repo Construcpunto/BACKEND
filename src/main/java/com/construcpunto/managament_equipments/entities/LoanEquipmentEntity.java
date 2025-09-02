@@ -88,4 +88,12 @@ public class LoanEquipmentEntity {
     public void setPromissoryNote(PromissoryNoteEntity promissoryNote) {
         this.promissoryNote = promissoryNote;
     }
+
+    public void reCalculateTotal(Integer totalDays){
+        if (totalDays > 5){
+            this.total = 0.0;
+            this.total = this.priceDay * totalDays;
+        }
+    }
+
 }

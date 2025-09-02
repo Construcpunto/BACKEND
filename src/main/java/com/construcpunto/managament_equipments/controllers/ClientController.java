@@ -27,7 +27,7 @@ public class ClientController {
         return ResponseEntity.ok(clientService.findAll());
     }
 
-    @GetMapping("/find-by-{id}")
+    @GetMapping("/find-by/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         Optional<ClientEntity> clientOptional = clientService.findById(id);
 

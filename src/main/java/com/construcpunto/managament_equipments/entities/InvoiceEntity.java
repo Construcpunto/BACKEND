@@ -3,13 +3,14 @@ package com.construcpunto.managament_equipments.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "invoice")
 public class InvoiceEntity {
 
     @Id
-    private Integer id;
+    private Long id;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(
@@ -29,14 +30,14 @@ public class InvoiceEntity {
     private Double total;
 
     public InvoiceEntity() {
-
+        this.returnDate = LocalDateTime.now();
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,5 +71,11 @@ public class InvoiceEntity {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public void calculateDays(LocalDateTime deliveryDate) {
+        long totalDaysLong = ChronoUnit.DAYS.between(deliveryDate, this.returnDate);
+        this.totalDays = (int) totalDaysLong;
+
     }
 }

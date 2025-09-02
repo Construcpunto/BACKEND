@@ -32,7 +32,10 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     private IDeliveryRepository deliveryRepository;
 
     @Autowired
-    IPromissoyNoteRepository promissoyNoteRepository;
+    private IPromissoyNoteRepository promissoyNoteRepository;
+
+    @Autowired
+    private IInvoiceRepository invoiceRepository;
 
 
     @Override
@@ -166,7 +169,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
                 viewLoanDtos.getLast().getEquipmentName().add(equipmentName);
             }
 
-//            System.out.println("-------------------------" + "  " + loanEquipments.get(i).getPromissoryNote().getId() + "/" + idPrommissoryNoteBack.intValue() + "  " + "-------------------------");
             idPrommissoryNoteBack = loanEquipments.get(i).getPromissoryNote().getId();
 
         }
@@ -189,7 +191,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         LoanEquipmentResponseDto loanEquipmentResponse = new LoanEquipmentResponseDto(loanEquipments.size());
 
-        String[][] equipments = new String[loanEquipments.size()][5];;
+        String[][] equipments = new String[loanEquipments.size()][5];
+        ;
 
         for (int i = 0; i < loanEquipments.size(); i++) {
             equipments[i][0] = loanEquipments.get(i).getQuantity().toString();
@@ -212,10 +215,56 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         loanEquipmentResponse.setLoanEquipments(equipments);
         loanEquipmentResponse.setComments(loanEquipmentResponse.getComments());
 
-
-
         return loanEquipmentResponse;
     }
+
+    @Override
+    public void returnEquipment(Long promissoryNoteId) {
+        InvoiceEntity invoice = new InvoiceEntity();
+        Double totalInvoice = 0.0;
+
+        LoanEquipmentEntity loanEquipment;
+        EquipmentEntity equipment;
+
+        LoanEquipmentResponseDto loanEquipmentResponseDto = this.findByPromissoryId(promissoryNoteId);
+
+        PromissoryNoteEntity promissoryNote =
+                promissoyNoteRepository.findById(promissoryNoteId).
+                        orElseThrow(() -> new RequestException("El pagare no se encuentra", HttpStatus.NOT_FOUND));
+
+        invoice.setId(promissoryNoteId);
+        invoice.calculateDays(promissoryNote.getDeliveryDate());
+        invoice.setPromissoryNote(promissoryNote);
+
+        invoiceRepository.save(invoice);
+
+        for (LoanEquipmentEntity le : promissoryNote.getLoanEquipment()) {
+            loanEquipment = new LoanEquipmentEntity();
+            equipment = new EquipmentEntity();
+
+            equipment = le.getEquipment();
+
+            loanEquipment = le;
+            loanEquipment.reCalculateTotal(invoice.getTotalDays());
+            if (!loanEquipment.getEquipmentReturn()){
+                equipment.setQuantity(equipment.getQuantity() + loanEquipment.getQuantity());
+            }
+            loanEquipment.setEquipmentReturn(true);
+
+
+            equipmentRepository.save(equipment);
+            loanEquipmentRepository.save(loanEquipment);
+
+            totalInvoice += loanEquipment.getTotal();
+        }
+
+//        System.out.println("-------------------------" + "  " + loanEquipment.getEquipmentReturn()  + "/" + totalInvoice + "  " + "-------------------------");
+
+        invoice.setTotal(totalInvoice);
+        invoiceRepository.save(invoice);
+
+    }
+
 
     @Override
     public void delete(LoanEquipmentEntity loanEquipment) {
