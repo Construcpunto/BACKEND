@@ -1,8 +1,10 @@
 package com.construcpunto.managament_equipments.services;
 
 import com.construcpunto.managament_equipments.entities.ClientEntity;
+import com.construcpunto.managament_equipments.exceptions.RequestException;
 import com.construcpunto.managament_equipments.repositories.IClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +29,16 @@ public class ClientService implements IClientService{
     @Override
     public Optional<ClientEntity> findById(Long id) {
         return clientRepository.findById(id);
+    }
+
+    @Override
+    public Optional<ClientEntity> findByCedula(Integer cedula) {
+        return clientRepository.findByCedula(cedula);
+    }
+
+    @Override
+    public Optional<ClientEntity> findByName(String name) {
+        return clientRepository.findByName(name);
     }
 
     @Override

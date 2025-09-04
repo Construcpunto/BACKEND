@@ -77,5 +77,8 @@ public class InvoiceEntity {
         long totalDaysLong = ChronoUnit.DAYS.between(deliveryDate, this.returnDate);
         this.totalDays = (int) totalDaysLong;
 
+        if (this.totalDays.equals(0))
+            totalDays = 1;
+
     }
 }

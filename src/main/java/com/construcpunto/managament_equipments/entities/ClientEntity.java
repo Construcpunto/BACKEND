@@ -3,6 +3,7 @@ package com.construcpunto.managament_equipments.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
@@ -13,8 +14,11 @@ import java.util.List;
 public class ClientEntity {
 
     @Id
-    @Column(name = "client_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    private Integer cedula;
 
     @Column(name = "cient_name")
     @NotBlank
@@ -45,6 +49,14 @@ public class ClientEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(Integer cedula) {
+        this.cedula = cedula;
     }
 
     public @NotBlank @Size(max = 50) String getName() {

@@ -27,28 +27,39 @@ public class ClientController {
         return ResponseEntity.ok(clientService.findAll());
     }
 
-    @GetMapping("/find-by/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
-        Optional<ClientEntity> clientOptional = clientService.findById(id);
+    @GetMapping("/find-by")
+    public ResponseEntity<?> findById(@RequestParam(required = false, name = "client-cedula") Integer clientCedula,
+                                      @RequestParam(required = false, name = "client-name") String clientName) {
 
-        if(clientOptional.isPresent())
-            return ResponseEntity.ok(clientOptional.get());
+        Optional<ClientEntity> clientOptional;
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if(clientCedula != null){
+            clientOptional = clientService.findByCedula(clientCedula);
+            return ResponseEntity.ok(clientOptional);
+        } else {
+            clientOptional = clientService.findByName(clientName);
+            return ResponseEntity.ok(clientOptional);
+
+        }
     }
 
+
     @PostMapping("/save")
-    public ResponseEntity<?> save(@Valid @RequestBody ClientEntity client, BindingResult result) {
+    public ResponseEntity<?> save(@Valid @RequestBody ClientEntity client,
+                                  BindingResult result) {
         if (result.hasFieldErrors()) {
             return validation(result);
         }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.save(client));
     }
 
+
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<ClientEntity> clientOptional = clientService.findById(id);
-        if (clientOptional.isPresent()){
+        if (clientOptional.isPresent()) {
             clientService.delete(clientOptional.get());
             return ResponseEntity.ok(clientOptional.orElseThrow());
         }

@@ -213,7 +213,16 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         loanEquipmentResponse.setDeposit(promissoryNote.getDeposit());
         loanEquipmentResponse.setDeliveryPrice(promissoryNote.getDeliveryPrice());
         loanEquipmentResponse.setLoanEquipments(equipments);
-        loanEquipmentResponse.setComments(loanEquipmentResponse.getComments());
+        loanEquipmentResponse.setComments(promissoryNote.getComments());
+
+        if (loanEquipments.getFirst().getEquipmentReturn()) {
+            InvoiceEntity invoice = invoiceRepository.findById(promissoryNote.getId()).orElseThrow
+                    (() -> new RequestException("No hay factura generada aun",HttpStatus.NOT_FOUND));
+
+            loanEquipmentResponse.setDeliveryReturn(invoice.getReturnDate());
+            loanEquipmentResponse.setTotalDays(invoice.getTotalDays());
+            loanEquipmentResponse.setTotal(invoice.getTotal());
+        }
 
         return loanEquipmentResponse;
     }
@@ -246,7 +255,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
             loanEquipment = le;
             loanEquipment.reCalculateTotal(invoice.getTotalDays());
-            if (!loanEquipment.getEquipmentReturn()){
+            if (!loanEquipment.getEquipmentReturn()) {
                 equipment.setQuantity(equipment.getQuantity() + loanEquipment.getQuantity());
             }
             loanEquipment.setEquipmentReturn(true);

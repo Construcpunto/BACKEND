@@ -7,7 +7,11 @@ import java.util.Optional;
 
 public interface IClientService {
     ClientEntity save(ClientEntity client);
+
     List<ClientEntity> findAll();
     Optional<ClientEntity> findById(Long id);
+    Optional<ClientEntity> findByCedula(Integer cedula);
+    Optional<ClientEntity> findByName(String name);
+
     void delete(ClientEntity client);
 }
