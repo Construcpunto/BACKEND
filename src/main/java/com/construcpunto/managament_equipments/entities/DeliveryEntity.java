@@ -1,5 +1,6 @@
 package com.construcpunto.managament_equipments.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,7 @@ public class DeliveryEntity {
 
     private Integer cedula;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PromissoryNoteEntity> promissoryNotes;
 

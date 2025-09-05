@@ -32,15 +32,14 @@ public class LoanController {
 
     @PostMapping("return-equipment/{promissoryNoteId}")
     public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId){
-
         loanEquipmentService.returnEquipment(promissoryNoteId);
         return ResponseEntity.ok().build();
     }
 
 
     @GetMapping("/find-all")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok(loanEquipmentService.findAll());
+    public ResponseEntity<?> findAll(@RequestParam(required = false) Boolean active) {
+        return ResponseEntity.ok(loanEquipmentService.findAllViewLoanDto(active));
     }
 
     @GetMapping("/find-loan")

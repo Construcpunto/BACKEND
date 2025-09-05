@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -137,44 +136,34 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     }
 
     @Override
-    public List<viewLoanDto> findAll() {
-        Long idPrommissoryNoteBack = 0L;
-        Long idPromissoryNote = 0L;
+    public List<LoanEquipmentEntity> findAll() {
+        return loanEquipmentRepository.findAll();
+    }
 
-        viewLoanDto viewLoanDto = new viewLoanDto();
-        List<viewLoanDto> viewLoanDtos = new ArrayList<>();
-        List<LoanEquipmentEntity> loanEquipments = loanEquipmentRepository.findAll();
+    @Override
+    public List<viewLoanDto> findAllViewLoanDto(Boolean active) {
+        List<LoanEquipmentEntity> loanEquipments = findAll();
+        List<LoanEquipmentEntity> loanEquipmentsActives = new ArrayList<>();
+        List<LoanEquipmentEntity> loanEquipmentsNoActives = new ArrayList<>();
 
-        System.out.println("-------------------------" + loanEquipments.size() + "-------------------------");
-
-
-        for (int i = 0; i < loanEquipments.size(); i++) {
-            viewLoanDto = new viewLoanDto();
-            idPromissoryNote = loanEquipments.get(i).getPromissoryNote().getId();
-
-            Long clientId = loanEquipments.get(i).getPromissoryNote().getClient().getId();
-            String clientName = loanEquipments.get(i).getPromissoryNote().getClient().getName();
-            Boolean isReturn = loanEquipments.get(i).getEquipmentReturn();
-            String equipmentName = loanEquipments.get(i).getEquipment().getName();
-
-            if (!idPromissoryNote.equals(idPrommissoryNoteBack)) {
-                viewLoanDto.setCedula(clientId);
-                viewLoanDto.setClientName(clientName);
-                viewLoanDto.getEquipmentName().add(equipmentName);
-                viewLoanDto.setPromissoryNoteId(idPromissoryNote);
-
-                viewLoanDtos.add(viewLoanDto);
-
-            } else {
-                viewLoanDtos.getLast().getEquipmentName().add(equipmentName);
+        if (active != null){
+            for (LoanEquipmentEntity le : loanEquipments) {
+                if (le.getEquipmentReturn())
+                    loanEquipmentsActives.add(le);
+                else
+                    loanEquipmentsNoActives.add(le);
             }
 
-            idPrommissoryNoteBack = loanEquipments.get(i).getPromissoryNote().getId();
+            if (active) {
+                return convertToDto(loanEquipmentsActives);
+            }
+            else if(!active)
+                return convertToDto(loanEquipmentsNoActives);
 
         }
 
-        return viewLoanDtos;
-    }
+        return convertToDto(loanEquipmentRepository.findAll());    }
+
 
     @Override
     public LoanEquipmentResponseDto findByPromissoryId(Long promissoryId) {
@@ -217,7 +206,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         if (loanEquipments.getFirst().getEquipmentReturn()) {
             InvoiceEntity invoice = invoiceRepository.findById(promissoryNote.getId()).orElseThrow
-                    (() -> new RequestException("No hay factura generada aun",HttpStatus.NOT_FOUND));
+                    (() -> new RequestException("No hay factura generada aun", HttpStatus.NOT_FOUND));
 
             loanEquipmentResponse.setDeliveryReturn(invoice.getReturnDate());
             loanEquipmentResponse.setTotalDays(invoice.getTotalDays());
@@ -266,12 +255,48 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
             totalInvoice += loanEquipment.getTotal();
         }
-
 //        System.out.println("-------------------------" + "  " + loanEquipment.getEquipmentReturn()  + "/" + totalInvoice + "  " + "-------------------------");
-
         invoice.setTotal(totalInvoice);
         invoiceRepository.save(invoice);
 
+    }
+
+    List<viewLoanDto> convertToDto(List<LoanEquipmentEntity> loanEquipments) {
+        Long idPrommissoryNoteBack = 0L;
+        Long idPromissoryNote = 0L;
+
+        viewLoanDto viewLoanDto = new viewLoanDto();
+        List<viewLoanDto> viewLoanDtos = new ArrayList<>();
+
+        System.out.println("-------------------------" + loanEquipments.size() + "-------------------------");
+
+
+        for (int i = 0; i < loanEquipments.size(); i++) {
+            viewLoanDto = new viewLoanDto();
+            idPromissoryNote = loanEquipments.get(i).getPromissoryNote().getId();
+
+            Integer cedula = loanEquipments.get(i).getPromissoryNote().getClient().getCedula();
+            String clientName = loanEquipments.get(i).getPromissoryNote().getClient().getName();
+            Boolean isReturn = loanEquipments.get(i).getEquipmentReturn();
+            String equipmentName = loanEquipments.get(i).getEquipment().getName();
+
+            if (!idPromissoryNote.equals(idPrommissoryNoteBack)) {
+                viewLoanDto.setCedula(cedula);
+                viewLoanDto.setClientName(clientName);
+                viewLoanDto.getEquipmentName().add(equipmentName);
+                viewLoanDto.setPromissoryNoteId(idPromissoryNote);
+
+                viewLoanDtos.add(viewLoanDto);
+
+            } else {
+                viewLoanDtos.getLast().getEquipmentName().add(equipmentName);
+            }
+
+            idPrommissoryNoteBack = loanEquipments.get(i).getPromissoryNote().getId();
+
+        }
+
+        return viewLoanDtos;
     }
 
 
