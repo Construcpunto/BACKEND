@@ -120,8 +120,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     PromissoryNoteEntity makePromissoryNote(LoanEquipmentRequestDto loanEquipmentRequestDto) {
         PromissoryNoteEntity promissoryNote = new PromissoryNoteEntity();
         DeliveryEntity delivery = new DeliveryEntity();
-        if (loanEquipmentRequestDto.getDeliveryId() != 0L)
-            delivery = deliveryRepository.findById(loanEquipmentRequestDto.getDeliveryId()).
+        if (loanEquipmentRequestDto.getDeliveryCedula() != 0)
+            delivery = deliveryRepository.findByCedula(loanEquipmentRequestDto.getDeliveryCedula()).
                     orElseThrow(() -> new RequestException("El domiciliario no se encuentra registrado", HttpStatus.NOT_FOUND));
         else
             delivery = loanEquipmentRequestDto.getDelivery();

@@ -13,7 +13,7 @@ public class LoanEquipmentRequestDto {
 
     private ClientEntity client;
 
-    private Long deliveryId;
+    private Integer deliveryCedula;
 
     private DeliveryEntity delivery;
 
@@ -31,7 +31,7 @@ public class LoanEquipmentRequestDto {
     public LoanEquipmentRequestDto() {
         this.equipmentIds = new HashMap<>();
         this.clientId = 0L;
-        this.deliveryId = 0L;
+        this.deliveryCedula = 0;
         this.deliveryPrice = 0.0;
         this.deposit = 0.0;
     }
@@ -60,12 +60,12 @@ public class LoanEquipmentRequestDto {
         this.equipmentIds = equipmentIds;
     }
 
-    public Long getDeliveryId() {
-        return deliveryId;
+    public Integer getDeliveryCedula() {
+        return deliveryCedula;
     }
 
-    public void setDeliveryId(Long deliveryId) {
-        this.deliveryId = deliveryId;
+    public void setDeliveryCedula(Integer deliveryCedula) {
+        this.deliveryCedula = deliveryCedula;
     }
 
     public DeliveryEntity getDelivery() {
