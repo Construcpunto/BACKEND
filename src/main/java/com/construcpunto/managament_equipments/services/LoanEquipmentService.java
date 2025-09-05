@@ -149,9 +149,9 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         if (active != null){
             for (LoanEquipmentEntity le : loanEquipments) {
                 if (le.getEquipmentReturn())
-                    loanEquipmentsActives.add(le);
-                else
                     loanEquipmentsNoActives.add(le);
+                else
+                    loanEquipmentsActives.add(le);
             }
 
             if (active) {
