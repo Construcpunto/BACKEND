@@ -35,10 +35,18 @@ public class EquipmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(equipmentService.save(equipment));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    @PostMapping("/filter")
+    public ResponseEntity<?> filter(@RequestParam(required = false) String name) {
+        if (name != null) {
+            return ResponseEntity.ok(equipmentService.findByNameContainingIgnoreCase(name));
+        }
+        return ResponseEntity.ok(equipmentService.findAll());
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         Optional<EquipmentEntity> equipmentOptional = equipmentService.findById(id);
-        if (equipmentOptional.isPresent()){
+        if (equipmentOptional.isPresent()) {
             equipmentService.delete(equipmentOptional.get());
             return ResponseEntity.ok(equipmentOptional.orElseThrow());
         }

@@ -146,7 +146,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         List<LoanEquipmentEntity> loanEquipmentsActives = new ArrayList<>();
         List<LoanEquipmentEntity> loanEquipmentsNoActives = new ArrayList<>();
 
-        if (active != null){
+        if (active != null) {
             for (LoanEquipmentEntity le : loanEquipments) {
                 if (le.getEquipmentReturn())
                     loanEquipmentsNoActives.add(le);
@@ -156,13 +156,13 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
             if (active) {
                 return convertToDto(loanEquipmentsActives);
-            }
-            else if(!active)
+            } else if (!active)
                 return convertToDto(loanEquipmentsNoActives);
 
         }
 
-        return convertToDto(loanEquipmentRepository.findAll());    }
+        return convertToDto(loanEquipmentRepository.findAll());
+    }
 
 
     @Override
@@ -174,14 +174,15 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         ClientEntity client = promissoryNote.getClient();
 
-        DeliveryEntity delivery = promissoryNote.getDelivery();
-
         List<LoanEquipmentEntity> loanEquipments = promissoryNote.getLoanEquipment();
-
         LoanEquipmentResponseDto loanEquipmentResponse = new LoanEquipmentResponseDto(loanEquipments.size());
-
         String[][] equipments = new String[loanEquipments.size()][5];
-        ;
+
+        DeliveryEntity delivery = new DeliveryEntity();
+        if(promissoryNote.getDelivery() != null){
+            delivery = promissoryNote.getDelivery();
+            loanEquipmentResponse.setDeliveryName(delivery.getName());
+        }
 
         for (int i = 0; i < loanEquipments.size(); i++) {
             equipments[i][0] = loanEquipments.get(i).getQuantity().toString();
@@ -196,7 +197,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         loanEquipmentResponse.setAddressClient(client.getAddress());
         loanEquipmentResponse.setNumberPhone(client.getNumberPhone());
 
-        loanEquipmentResponse.setDeliveryName(delivery.getName());
 
         loanEquipmentResponse.setDeliveryDate(promissoryNote.getDeliveryDate());
         loanEquipmentResponse.setDeposit(promissoryNote.getDeposit());
@@ -298,7 +298,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         return viewLoanDtos;
     }
-
 
     @Override
     public void delete(LoanEquipmentEntity loanEquipment) {

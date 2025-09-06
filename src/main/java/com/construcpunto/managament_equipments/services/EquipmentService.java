@@ -30,6 +30,11 @@ public class EquipmentService implements IEquipmentService {
     }
 
     @Override
+    public List<EquipmentEntity> findByNameContainingIgnoreCase(String name) {
+        return equipmentRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
     public void delete(EquipmentEntity equipment) {
         equipmentRepository.delete(equipment);
     }

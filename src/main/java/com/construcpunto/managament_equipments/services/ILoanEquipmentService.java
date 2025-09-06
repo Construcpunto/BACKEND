@@ -4,6 +4,7 @@ import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
 import com.construcpunto.managament_equipments.dto.LoanEquipmentResponseDto;
 import com.construcpunto.managament_equipments.dto.viewLoanDto;
 import com.construcpunto.managament_equipments.entities.ClientEntity;
+import com.construcpunto.managament_equipments.entities.EquipmentEntity;
 import com.construcpunto.managament_equipments.entities.LoanEquipmentEntity;
 
 import java.util.List;

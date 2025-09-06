@@ -23,6 +23,7 @@ public class DeliveryEntity {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NotNull
     private Integer cedula;
 
     @JsonIgnore
