@@ -1,6 +1,7 @@
 package com.construcpunto.managament_equipments.services;
 
 import com.construcpunto.managament_equipments.entities.ClientEntity;
+import com.construcpunto.managament_equipments.entities.EquipmentEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,8 @@ public interface IClientService {
     Optional<ClientEntity> findById(Long id);
     Optional<ClientEntity> findByCedula(Integer cedula);
     Optional<ClientEntity> findByName(String name);
+    List<ClientEntity> findByNameContainingIgnoreCase(String name);
+
 
     void delete(ClientEntity client);
 }

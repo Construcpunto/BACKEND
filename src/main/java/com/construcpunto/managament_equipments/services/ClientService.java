@@ -1,6 +1,7 @@
 package com.construcpunto.managament_equipments.services;
 
 import com.construcpunto.managament_equipments.entities.ClientEntity;
+import com.construcpunto.managament_equipments.entities.EquipmentEntity;
 import com.construcpunto.managament_equipments.exceptions.RequestException;
 import com.construcpunto.managament_equipments.repositories.IClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,11 @@ public class ClientService implements IClientService{
     @Override
     public Optional<ClientEntity> findByName(String name) {
         return clientRepository.findByName(name);
+    }
+
+    @Override
+    public List<ClientEntity> findByNameContainingIgnoreCase(String name) {
+        return clientRepository.findByNameContainingIgnoreCase(name);
     }
 
     @Override

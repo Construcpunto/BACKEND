@@ -9,10 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:5173"})
 @RestController
@@ -32,13 +29,14 @@ public class ClientController {
                                       @RequestParam(required = false, name = "client-name") String clientName) {
 
         Optional<ClientEntity> clientOptional;
+        List<ClientEntity> clients = new ArrayList<>();
 
         if(clientCedula != null){
             clientOptional = clientService.findByCedula(clientCedula);
             return ResponseEntity.ok(clientOptional);
         } else {
-            clientOptional = clientService.findByName(clientName);
-            return ResponseEntity.ok(clientOptional);
+            clients = clientService.findByNameContainingIgnoreCase(clientName);
+            return ResponseEntity.ok(clients);
 
         }
     }
