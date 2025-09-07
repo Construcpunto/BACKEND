@@ -1,13 +1,10 @@
 package com.construcpunto.managament_equipments.dto;
 
-import com.construcpunto.managament_equipments.entities.ClientEntity;
-import com.construcpunto.managament_equipments.entities.DeliveryEntity;
-
 import java.time.LocalDateTime;
 
 public class LoanEquipmentResponseDto {
 
-    private Long clientId;
+    private Integer clientCedula;
     private String clientName;
     private String addressClient;
     private String numberPhone;
@@ -27,12 +24,12 @@ public class LoanEquipmentResponseDto {
         this.loanEquipments = new String[rows][5];
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Integer getClientCedula() {
+        return clientCedula;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClientCedula(Integer clientCedula) {
+        this.clientCedula = clientCedula;
     }
 
     public String getClientName() {

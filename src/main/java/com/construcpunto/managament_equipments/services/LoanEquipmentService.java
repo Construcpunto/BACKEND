@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -192,7 +193,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             equipments[i][4] = loanEquipments.get(i).getTotal().toString();
         }
 
-        loanEquipmentResponse.setClientId(client.getId());
+        loanEquipmentResponse.setClientCedula(client.getCedula());
         loanEquipmentResponse.setClientName(client.getName());
         loanEquipmentResponse.setAddressClient(client.getAddress());
         loanEquipmentResponse.setNumberPhone(client.getNumberPhone());
@@ -268,7 +269,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         viewLoanDto viewLoanDto = new viewLoanDto();
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
 
-        System.out.println("-------------------------" + loanEquipments.size() + "-------------------------");
+//        System.out.println("-------------------------" + loanEquipments.size() + "-------------------------");
 
 
         for (int i = 0; i < loanEquipments.size(); i++) {
@@ -277,6 +278,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
             Integer cedula = loanEquipments.get(i).getPromissoryNote().getClient().getCedula();
             String clientName = loanEquipments.get(i).getPromissoryNote().getClient().getName();
+            LocalDateTime dateTime = loanEquipments.get(i).getPromissoryNote().getDeliveryDate();
             Boolean isReturn = loanEquipments.get(i).getEquipmentReturn();
             String equipmentName = loanEquipments.get(i).getEquipment().getName();
 
@@ -285,6 +287,9 @@ public class LoanEquipmentService implements ILoanEquipmentService {
                 viewLoanDto.setClientName(clientName);
                 viewLoanDto.getEquipmentName().add(equipmentName);
                 viewLoanDto.setPromissoryNoteId(idPromissoryNote);
+
+                if (!isReturn)
+                    viewLoanDto.setDate(dateTime);
 
                 viewLoanDtos.add(viewLoanDto);
 
