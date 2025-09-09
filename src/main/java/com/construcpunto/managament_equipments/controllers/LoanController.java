@@ -2,6 +2,7 @@ package com.construcpunto.managament_equipments.controllers;
 
 import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
 import com.construcpunto.managament_equipments.dto.PartialReturnDto;
+import com.construcpunto.managament_equipments.dto.viewLoanDto;
 import com.construcpunto.managament_equipments.services.ILoanEquipmentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:5173"})
 @RestController
@@ -52,6 +50,8 @@ public class LoanController {
 
     @GetMapping("/find-all")
     public ResponseEntity<?> findAll(@RequestParam(required = false) Boolean active) {
+        List<viewLoanDto> viewLoanDtos = new ArrayList<>();
+        viewLoanDtos = loanEquipmentService.findAllViewLoanDto(active);
         return ResponseEntity.ok(loanEquipmentService.findAllViewLoanDto(active));
     }
 
@@ -63,10 +63,14 @@ public class LoanController {
     @GetMapping("/filter")
     public ResponseEntity<?> filter(@RequestParam(required = false)
                                     @DateTimeFormat(pattern = "dd-MM-yyyy")LocalDate deliveryDate) {
+
+        List<viewLoanDto> viewLoanDtos = new ArrayList<>();
         if (deliveryDate != null) {
-//            return ResponseEntity.ok(Collections.reverse(loanEquipmentService.findByDeliveryDate(deliveryDate)));
+            viewLoanDtos = loanEquipmentService.findByDeliveryDate(deliveryDate);
+            Collections.reverse(viewLoanDtos);
+            return ResponseEntity.ok(viewLoanDtos);
         }
-        return ResponseEntity.ok(loanEquipmentService.findAll());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     private ResponseEntity<?> validation(BindingResult result) {

@@ -123,16 +123,20 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     PromissoryNoteEntity makePromissoryNote(LoanEquipmentRequestDto loanEquipmentRequestDto) {
         PromissoryNoteEntity promissoryNote = new PromissoryNoteEntity();
         DeliveryEntity delivery = new DeliveryEntity();
-        if (loanEquipmentRequestDto.getDeliveryCedula() != 0)
+        if (loanEquipmentRequestDto.getDeliveryCedula() != 0) {
             delivery = deliveryRepository.findByCedula(loanEquipmentRequestDto.getDeliveryCedula()).
                     orElseThrow(() -> new RequestException("El domiciliario no se encuentra registrado", HttpStatus.NOT_FOUND));
-        else
-            delivery = loanEquipmentRequestDto.getDelivery();
+            promissoryNote.setDelivery(delivery);
+            promissoryNote.setDeliveryPrice(loanEquipmentRequestDto.getDeliveryPrice());
 
+        } else {
+            delivery = loanEquipmentRequestDto.getDelivery();
+            promissoryNote.setDelivery(delivery);
+            promissoryNote.setDeliveryPrice(loanEquipmentRequestDto.getDeliveryPrice());
+
+        }
 
         promissoryNote.setDeposit(loanEquipmentRequestDto.getDeposit());
-        promissoryNote.setDelivery(delivery);
-        promissoryNote.setDeliveryPrice(loanEquipmentRequestDto.getDeliveryPrice());
         promissoryNote.setComments(loanEquipmentRequestDto.getComments());
 
         return promissoryNote;
@@ -316,7 +320,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         viewLoanDto viewLoanDto = new viewLoanDto();
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
-        
+
         for (int i = 0; i < loanEquipments.size(); i++) {
             viewLoanDto = new viewLoanDto();
             idPromissoryNote = loanEquipments.get(i).getPromissoryNote().getId();
