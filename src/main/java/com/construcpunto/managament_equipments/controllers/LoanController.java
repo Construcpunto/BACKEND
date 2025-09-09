@@ -52,7 +52,9 @@ public class LoanController {
     public ResponseEntity<?> findAll(@RequestParam(required = false) Boolean active) {
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
         viewLoanDtos = loanEquipmentService.findAllViewLoanDto(active);
-        return ResponseEntity.ok(loanEquipmentService.findAllViewLoanDto(active));
+
+        Collections.reverse(viewLoanDtos);
+        return ResponseEntity.ok(viewLoanDtos);
     }
 
     @GetMapping("/find-loan")
