@@ -1,5 +1,8 @@
 package com.construcpunto.managament_equipments.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class LoanEquipmentResponseDto {
@@ -10,8 +13,10 @@ public class LoanEquipmentResponseDto {
     private String numberPhone;
     private String deliveryName;
 
-    private LocalDateTime deliveryDate;
-    private LocalDateTime deliveryReturn;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deliveryDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deliveryReturn;
 
     private Double deposit;
     private Double deliveryPrice;
@@ -64,19 +69,19 @@ public class LoanEquipmentResponseDto {
         this.deliveryName = deliveryName;
     }
 
-    public LocalDateTime getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(LocalDateTime deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
-    public LocalDateTime getDeliveryReturn() {
+    public LocalDate getDeliveryReturn() {
         return deliveryReturn;
     }
 
-    public void setDeliveryReturn(LocalDateTime deliveryReturn) {
+    public void setDeliveryReturn(LocalDate deliveryReturn) {
         this.deliveryReturn = deliveryReturn;
     }
 

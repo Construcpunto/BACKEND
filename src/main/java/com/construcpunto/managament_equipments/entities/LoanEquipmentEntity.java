@@ -2,6 +2,10 @@ package com.construcpunto.managament_equipments.entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @Entity
 @Table(name = "loan-equipment")
 public class LoanEquipmentEntity {
@@ -94,6 +98,13 @@ public class LoanEquipmentEntity {
             this.total = 0.0;
             this.total = this.priceDay * totalDays;
         }
+    }
+
+    public long quantityDays(LocalDate deliveryDate) {
+        long totalDaysLong = ChronoUnit.DAYS.between(deliveryDate, LocalDate.now());
+
+        return totalDaysLong;
+
     }
 
 }

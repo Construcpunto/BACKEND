@@ -1,7 +1,9 @@
 package com.construcpunto.managament_equipments.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -22,7 +24,8 @@ public class InvoiceEntity {
     private PromissoryNoteEntity promissoryNote;
 
     @Column(name = "return_date")
-    private LocalDateTime returnDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate returnDate;
 
     @Column(name = "total_days")
     private Integer totalDays;
@@ -30,7 +33,7 @@ public class InvoiceEntity {
     private Double total;
 
     public InvoiceEntity() {
-        this.returnDate = LocalDateTime.now();
+        this.returnDate = LocalDate.now();
     }
 
     public Long getId() {
@@ -49,11 +52,11 @@ public class InvoiceEntity {
         this.promissoryNote = promissoryNote;
     }
 
-    public LocalDateTime getReturnDate() {
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(LocalDateTime returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -73,7 +76,7 @@ public class InvoiceEntity {
         this.total = total;
     }
 
-    public void calculateDays(LocalDateTime deliveryDate) {
+    public void calculateDays(LocalDate deliveryDate) {
         long totalDaysLong = ChronoUnit.DAYS.between(deliveryDate, this.returnDate);
         this.totalDays = (int) totalDaysLong;
 

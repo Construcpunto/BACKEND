@@ -35,7 +35,7 @@ public class EquipmentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(equipmentService.save(equipment));
     }
 
-    @PostMapping("/filter")
+    @GetMapping("/filter")
     public ResponseEntity<?> filter(@RequestParam(required = false) String name) {
         if (name != null) {
             return ResponseEntity.ok(equipmentService.findByNameContainingIgnoreCase(name));

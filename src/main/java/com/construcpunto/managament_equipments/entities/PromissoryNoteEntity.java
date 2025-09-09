@@ -1,9 +1,11 @@
 package com.construcpunto.managament_equipments.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,8 @@ public class PromissoryNoteEntity {
     @OneToMany(mappedBy = "promissoryNote", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanEquipmentEntity> loanEquipment;
 
-    private LocalDateTime deliveryDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate deliveryDate;
 
     @NotNull
     private Double deposit;
@@ -39,7 +42,7 @@ public class PromissoryNoteEntity {
 
     public PromissoryNoteEntity() {
         this.loanEquipment = new ArrayList<>();
-        deliveryDate = LocalDateTime.now();
+        deliveryDate = LocalDate.now();
         this.deliveryPrice = 0.0;
         this.deposit = 0.0;
     }
@@ -68,11 +71,11 @@ public class PromissoryNoteEntity {
         this.loanEquipment = loanEquipment;
     }
 
-    public LocalDateTime getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(LocalDateTime deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 

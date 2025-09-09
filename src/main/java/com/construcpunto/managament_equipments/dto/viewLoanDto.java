@@ -1,6 +1,7 @@
 package com.construcpunto.managament_equipments.dto;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class viewLoanDto {
     private Integer cedula;
     private String clientName;
     private List<String> equipmentName;
-    private LocalDateTime date;
+    private LocalDate date;
     private Long promissoryNoteId;
 
     public viewLoanDto() {
@@ -41,11 +42,11 @@ public class viewLoanDto {
         this.equipmentName = equipmentName;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

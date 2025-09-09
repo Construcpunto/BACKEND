@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,4 +15,6 @@ public interface IPromissoyNoteRepository extends JpaRepository<PromissoryNoteEn
 
     @Query("SELECT p FROM PromissoryNoteEntity p WHERE p.client.id = ?1")
     Optional<PromissoryNoteEntity> findByClientId(Long clientId);
+
+    List<PromissoryNoteEntity> findByDeliveryDate(LocalDate deliveryDate);
 }
