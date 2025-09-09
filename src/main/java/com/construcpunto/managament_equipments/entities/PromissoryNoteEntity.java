@@ -28,10 +28,8 @@ public class PromissoryNoteEntity {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate deliveryDate;
 
-    @NotNull
     private Double deposit;
 
-    @NotNull
     private Double deliveryPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -316,10 +316,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         viewLoanDto viewLoanDto = new viewLoanDto();
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
-
-//        System.out.println("-------------------------" + loanEquipments.getFirst().getPromissoryNote().getDeliveryDate() + "-------------------------");
-
-
+        
         for (int i = 0; i < loanEquipments.size(); i++) {
             viewLoanDto = new viewLoanDto();
             idPromissoryNote = loanEquipments.get(i).getPromissoryNote().getId();
@@ -329,9 +326,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             LocalDate dateTime = loanEquipments.get(i).getPromissoryNote().getDeliveryDate();
             Boolean isReturn = loanEquipments.get(i).getEquipmentReturn();
             String equipmentName = loanEquipments.get(i).getEquipment().getName();
-
 //            System.out.println("-------------------------" + dateTime + "/" + i +"-------------------------");
-
 
             if (!idPromissoryNote.equals(idPrommissoryNoteBack)) {
                 viewLoanDto.setCedula(cedula);

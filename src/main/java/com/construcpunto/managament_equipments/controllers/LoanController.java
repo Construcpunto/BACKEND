@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class LoanController {
     public ResponseEntity<?> filter(@RequestParam(required = false)
                                     @DateTimeFormat(pattern = "dd-MM-yyyy")LocalDate deliveryDate) {
         if (deliveryDate != null) {
-            return ResponseEntity.ok(loanEquipmentService.findByDeliveryDate(deliveryDate));
+//            return ResponseEntity.ok(Collections.reverse(loanEquipmentService.findByDeliveryDate(deliveryDate)));
         }
         return ResponseEntity.ok(loanEquipmentService.findAll());
     }
