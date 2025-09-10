@@ -181,7 +181,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         }
 
         if (clientCedula != null) {
-//            System.out.println("-------------------------" + "  " + clientCedula + "  " + "-------------------------");
             ClientEntity client =
                     clientRepository.findByCedula(clientCedula).
                             orElseThrow(() -> new RequestException("El cliente no tiene pagares pendientes", HttpStatus.NOT_FOUND));
@@ -196,7 +195,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         return convertToDto(loanEquipments);
     }
-
 
 
     @Override
@@ -300,9 +298,12 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
     @Override
     public void partialReturnEquipment(Long promissoryNoteId, List<PartialReturnDto> partialReturnDto) {
-        PromissoryNoteEntity promissoryNote =
+        PromissoryNoteEntity promissoryNoteDB =
                 promissoyNoteRepository.findById(promissoryNoteId).
                         orElseThrow(() -> new RequestException("El pagare no se encuentra", HttpStatus.NOT_FOUND));
+
+
+        PromissoryNoteEntity promissoryNote = new PromissoryNoteEntity();
 
         List<LoanEquipmentEntity> loanEquipments = new ArrayList<>();
 
@@ -310,7 +311,18 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         EquipmentEntity equipment = new EquipmentEntity();
 
+        promissoryNote.setClient(promissoryNoteDB.getClient());
+        promissoryNote.setDeliveryDate(promissoryNoteDB.getDeliveryDate());
+        promissoryNote.setDeposit(promissoryNoteDB.getDeposit());
+        if (promissoryNoteDB.getDelivery() != null) {
+            promissoryNote.setDelivery(promissoryNoteDB.getDelivery());
+            promissoryNote.setDeliveryPrice(promissoryNote.getDeliveryPrice());
+        }
+        if (promissoryNoteDB.getComments() != null)
+            promissoryNote.setComments(promissoryNoteDB.getComments());
+
         for (PartialReturnDto partialReturn : partialReturnDto) {
+
             equipment = new EquipmentEntity();
             equipment = equipmentRepository.findById(partialReturn.getEquipmentId()).orElseThrow(() -> new RequestException("No se encuentra el equipo", HttpStatus.NOT_FOUND));
 
@@ -323,9 +335,30 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             loanEquipments.add(loan);
         }
 
-        promissoryNote.setLoanEquipment(loanEquipments);
+        for (int i = 0; i < promissoryNoteDB.getLoanEquipment().size(); i++) {
+            LoanEquipmentEntity loanE = promissoryNoteDB.getLoanEquipment().get(i);
 
+            for (PartialReturnDto partialReturn : partialReturnDto) {
+                if (loanE.getEquipment().getId().equals(partialReturn.getEquipmentId())) {
+
+                    promissoryNoteDB.getLoanEquipment().get(i).setQuantity(loanE.getQuantity() - partialReturn.getQuantity());
+                    promissoryNoteDB.getLoanEquipment().get(i).reCaluclatePriceDay(loanE.getEquipment().getUnitPrice());
+
+                    long totalDays = promissoryNoteDB.getLoanEquipment().get(i).quantityDays(promissoryNote.getDeliveryDate());
+                    System.out.println("-------------------------" + "  " + totalDays + "  " + "-------------------------");
+
+                    promissoryNoteDB.getLoanEquipment().get(i).reCalculateTotal((int) totalDays);
+                }
+            }
+        }
+
+        promissoryNote.setLoanEquipment(loanEquipments);
+//        System.out.println("-------------------------" + "  " + promissoryNoteDB + "  " + "-------------------------");
+
+        promissoyNoteRepository.save(promissoryNoteDB);
+        returnEquipment(promissoryNoteId);
         promissoyNoteRepository.save(promissoryNote);
+
 
     }
 

@@ -4,6 +4,7 @@ public class PartialReturnDto {
     private Long equipmentId;
     private Integer quantity;
 
+
     public PartialReturnDto() {
     }
 

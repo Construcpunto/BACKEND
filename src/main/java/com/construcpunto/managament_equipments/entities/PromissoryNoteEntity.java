@@ -109,4 +109,17 @@ public class PromissoryNoteEntity {
         this.comments = comments;
     }
 
+    @Override
+    public String toString() {
+        return "PromissoryNoteEntity{" +
+                "id=" + id +
+                ", client=" + client +
+                ", loanEquipment=" + loanEquipment +
+                ", deliveryDate=" + deliveryDate +
+                ", deposit=" + deposit +
+                ", deliveryPrice=" + deliveryPrice +
+                ", delivery=" + delivery +
+                ", comments='" + comments + '\'' +
+                '}';
+    }
 }

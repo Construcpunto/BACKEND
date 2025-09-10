@@ -69,6 +69,10 @@ public class LoanEquipmentEntity {
         this.priceDay = priceDay;
     }
 
+    public void reCaluclatePriceDay(Double unitPrice) {
+        this.priceDay = unitPrice * quantity;
+    }
+
     public Double getTotal() {
         return total;
     }
@@ -93,11 +97,14 @@ public class LoanEquipmentEntity {
         this.promissoryNote = promissoryNote;
     }
 
-    public void reCalculateTotal(Integer totalDays){
-        if (totalDays > 5){
-            this.total = 0.0;
+    public void reCalculateTotal(Integer totalDays) {
+        this.total = 0.0;
+        if (totalDays > 5) {
             this.total = this.priceDay * totalDays;
-        }
+        }else
+            this.total = this.priceDay * 5;
+
+
     }
 
     public long quantityDays(LocalDate deliveryDate) {
@@ -107,4 +114,15 @@ public class LoanEquipmentEntity {
 
     }
 
+    @Override
+    public String toString() {
+        return "LoanEquipmentEntity{" +
+                "id=" + id +
+                ", equipment=" + equipment +
+                ", quantity=" + quantity +
+                ", priceDay=" + priceDay +
+                ", total=" + total +
+                ", equipmentReturn=" + equipmentReturn +
+                '}';
+    }
 }
