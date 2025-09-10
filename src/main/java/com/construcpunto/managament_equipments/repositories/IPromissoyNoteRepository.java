@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface IPromissoyNoteRepository extends JpaRepository<PromissoryNoteEntity,Long> {
 
     @Query("SELECT p FROM PromissoryNoteEntity p WHERE p.client.id = ?1")
-    Optional<PromissoryNoteEntity> findByClientId(Long clientId);
+    List<PromissoryNoteEntity> findByClientId(Long clientId);
 
     List<PromissoryNoteEntity> findByDeliveryDate(LocalDate deliveryDate);
 }

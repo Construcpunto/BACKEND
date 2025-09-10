@@ -5,11 +5,9 @@ import com.construcpunto.managament_equipments.dto.LoanEquipmentResponseDto;
 import com.construcpunto.managament_equipments.dto.PartialReturnDto;
 import com.construcpunto.managament_equipments.dto.viewLoanDto;
 import com.construcpunto.managament_equipments.entities.ClientEntity;
-import com.construcpunto.managament_equipments.entities.EquipmentEntity;
 import com.construcpunto.managament_equipments.entities.LoanEquipmentEntity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ILoanEquipmentService {
@@ -19,7 +17,7 @@ public interface ILoanEquipmentService {
     List<viewLoanDto> findAllViewLoanDto(Boolean active);
     List<LoanEquipmentEntity> findAll();
     LoanEquipmentResponseDto findByPromissoryId(Long promissoryId);
-    List<viewLoanDto> findByDeliveryDate(LocalDate deliveryDate);
+    List<viewLoanDto> filter(LocalDate deliveryDate, Integer clientCedula);
 
     void delete(LoanEquipmentEntity loanEquipment);
 

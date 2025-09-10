@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @CrossOrigin(origins = {"http://localhost:5173"})
@@ -63,16 +62,15 @@ public class LoanController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<?> filter(@RequestParam(required = false)
-                                    @DateTimeFormat(pattern = "dd-MM-yyyy")LocalDate deliveryDate) {
+    public ResponseEntity<?> filter(@RequestParam(required = false, name = "delivery-date")
+                                    @DateTimeFormat(pattern = "dd-MM-yyyy")LocalDate deliveryDate,
+                                    @RequestParam(required = false, name = "client-cedula") Integer clientCedula) {
 
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
-        if (deliveryDate != null) {
-            viewLoanDtos = loanEquipmentService.findByDeliveryDate(deliveryDate);
-            Collections.reverse(viewLoanDtos);
-            return ResponseEntity.ok(viewLoanDtos);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        viewLoanDtos = loanEquipmentService.filter(deliveryDate, clientCedula);
+        Collections.reverse(viewLoanDtos);
+
+        return ResponseEntity.ok(viewLoanDtos);
     }
 
     private ResponseEntity<?> validation(BindingResult result) {
