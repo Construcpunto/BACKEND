@@ -26,7 +26,7 @@ public class LoanEquipmentResponseDto {
     private String comments;
 
     public LoanEquipmentResponseDto(int rows) {
-        this.loanEquipments = new String[rows][5];
+        this.loanEquipments = new String[rows][6];
     }
 
     public Integer getClientCedula() {

@@ -208,7 +208,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         List<LoanEquipmentEntity> loanEquipments = promissoryNote.getLoanEquipment();
         LoanEquipmentResponseDto loanEquipmentResponse = new LoanEquipmentResponseDto(loanEquipments.size());
-        String[][] equipments = new String[loanEquipments.size()][5];
+        String[][] equipments = new String[loanEquipments.size()][6];
 
         DeliveryEntity delivery = new DeliveryEntity();
         if (promissoryNote.getDelivery() != null) {
@@ -227,6 +227,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
                 Double totalUpdate = (loanEquipments.get(i).getTotal() * loanEquipments.get(i).quantityDays(promissoryNote.getDeliveryDate()));
                 equipments[i][4] = String.valueOf(totalUpdate);
             }
+            equipments[i][5] = loanEquipments.get(i).getEquipment().getId().toString();
+
 
         }
 
