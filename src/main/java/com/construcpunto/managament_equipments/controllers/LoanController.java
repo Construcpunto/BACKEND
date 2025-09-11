@@ -34,14 +34,14 @@ public class LoanController {
     }
 
     @PostMapping("return-equipment/{promissoryNoteId}")
-    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId){
+    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId) {
         loanEquipmentService.returnEquipment(promissoryNoteId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("partial-return-equipment/{promissoryNoteId}")
     public ResponseEntity<?> partialReturnEquipments(@PathVariable Long promissoryNoteId,
-                                                     @RequestBody List<PartialReturnDto> partialReturnDtos){
+                                                     @RequestBody List<PartialReturnDto> partialReturnDtos) {
         loanEquipmentService.partialReturnEquipment(promissoryNoteId, partialReturnDtos);
         return ResponseEntity.ok().build();
     }
@@ -57,18 +57,26 @@ public class LoanController {
     }
 
     @GetMapping("/find-loan")
-    public ResponseEntity<?> findByPromissory(@RequestParam Long promissoryId){
+    public ResponseEntity<?> findByPromissory(@RequestParam Long promissoryId) {
         return ResponseEntity.ok(loanEquipmentService.findByPromissoryId(promissoryId));
     }
 
     @GetMapping("/filter")
     public ResponseEntity<?> filter(@RequestParam(required = false, name = "delivery-date")
-                                    @DateTimeFormat(pattern = "dd-MM-yyyy")LocalDate deliveryDate,
-                                    @RequestParam(required = false, name = "client-cedula") Integer clientCedula) {
+                                    @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate deliveryDate,
+                                    @RequestParam(required = false, name = "client-cedula") Integer clientCedula,
+                                    @RequestParam(required = false) Boolean active) {
 
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
-        viewLoanDtos = loanEquipmentService.filter(deliveryDate, clientCedula);
-        Collections.reverse(viewLoanDtos);
+
+        if (deliveryDate != null || clientCedula != null) {
+            viewLoanDtos = loanEquipmentService.filter(deliveryDate, clientCedula);
+            Collections.reverse(viewLoanDtos);
+
+        }
+
+        viewLoanDtos = loanEquipmentService.findAllViewLoanDto(active);
+
 
         return ResponseEntity.ok(viewLoanDtos);
     }
