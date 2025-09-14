@@ -27,6 +27,11 @@ public class EquipmentController {
         return ResponseEntity.ok(equipmentService.findAll());
     }
 
+    @GetMapping("/find-by-/{equipmentId}")
+    public ResponseEntity<?> findById(@PathVariable Long equipmentId) {
+        return ResponseEntity.ok(equipmentService.findById(equipmentId));
+    }
+
     @PostMapping("/save")
     public ResponseEntity<?> save(@Valid @RequestBody EquipmentEntity equipment, BindingResult result) {
         if (result.hasFieldErrors()) {
