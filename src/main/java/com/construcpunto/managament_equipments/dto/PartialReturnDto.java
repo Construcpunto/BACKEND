@@ -24,4 +24,12 @@ public class PartialReturnDto {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "PartialReturnDto{" +
+                "equipmentId=" + equipmentId +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

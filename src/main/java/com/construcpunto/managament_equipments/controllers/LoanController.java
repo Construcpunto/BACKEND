@@ -73,6 +73,8 @@ public class LoanController {
             viewLoanDtos = loanEquipmentService.filter(deliveryDate, clientCedula);
             Collections.reverse(viewLoanDtos);
 
+            return ResponseEntity.ok(viewLoanDtos);
+
         }
 
         viewLoanDtos = loanEquipmentService.findAllViewLoanDto(active);

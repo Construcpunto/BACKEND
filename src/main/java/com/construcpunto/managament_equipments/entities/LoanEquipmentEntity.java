@@ -118,7 +118,8 @@ public class LoanEquipmentEntity {
     public String toString() {
         return "LoanEquipmentEntity{" +
                 "id=" + id +
-                ", equipment=" + equipment +
+                ", equipment=" + equipment.getId() +
+                ", equipmentName=" + equipment.getName() +
                 ", quantity=" + quantity +
                 ", priceDay=" + priceDay +
                 ", total=" + total +

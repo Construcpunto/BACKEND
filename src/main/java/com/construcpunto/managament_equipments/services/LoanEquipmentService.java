@@ -324,8 +324,10 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             promissoryNote.setComments(promissoryNoteDB.getComments());
 
         for (PartialReturnDto partialReturn : partialReturnDto) {
+            System.out.println("-------------------------" + "  " + partialReturn.toString() + "  " + "-------------------------");
 
             equipment = new EquipmentEntity();
+            loan = new LoanEquipmentEntity();
             equipment = equipmentRepository.findById(partialReturn.getEquipmentId()).orElseThrow(() -> new RequestException("No se encuentra el equipo", HttpStatus.NOT_FOUND));
 
             loan.setEquipment(equipment);
@@ -355,7 +357,9 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         }
 
         promissoryNote.setLoanEquipment(loanEquipments);
-//        System.out.println("-------------------------" + "  " + promissoryNoteDB + "  " + "-------------------------");
+
+
+
 
         promissoyNoteRepository.save(promissoryNoteDB);
         returnEquipment(promissoryNoteId);
