@@ -130,6 +130,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         } else {
             delivery = loanEquipmentRequestDto.getDelivery();
+            deliveryRepository.save(delivery);
             promissoryNote.setDelivery(delivery);
             promissoryNote.setDeliveryPrice(loanEquipmentRequestDto.getDeliveryPrice());
 
