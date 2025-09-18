@@ -41,7 +41,16 @@ public class DeliveryController {
 
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("El domiciliario no se encuentra registrado");
     }
-    @GetMapping
+
+    @GetMapping("/find-by-cc/{deliveryCedula}")
+    public ResponseEntity<?> findByCedula(@PathVariable Integer deliveryCedula) {
+        Optional<DeliveryEntity> delivery = deliveryService.findByCedula(deliveryCedula);
+
+        if (delivery.isPresent())
+            return ResponseEntity.ok(delivery);
+
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("El domiciliario no se encuentra registrado");
+    }
 
     private ResponseEntity<?> validation(BindingResult result) {
         Map<String, String> errors = new HashMap<>();

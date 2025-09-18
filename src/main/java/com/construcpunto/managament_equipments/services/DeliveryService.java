@@ -22,4 +22,9 @@ public class DeliveryService implements IDeliveryService{
     public Optional<DeliveryEntity> findById(Long id) {
         return deliveryRepository.findById(id);
     }
+
+    @Override
+    public Optional<DeliveryEntity> findByCedula(Integer deliveryCedula) {
+        return deliveryRepository.findByCedula(deliveryCedula);
+    }
 }

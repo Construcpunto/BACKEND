@@ -10,5 +10,6 @@ public interface IDeliveryService {
 
     Optional<DeliveryEntity> findById(Long id);
 
+    Optional<DeliveryEntity> findByCedula(Integer deliveryCedula);
 
 }
