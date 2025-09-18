@@ -1,6 +1,7 @@
 package com.construcpunto.managament_equipments.controllers;
 
 import com.construcpunto.managament_equipments.entities.DeliveryEntity;
+import com.construcpunto.managament_equipments.exceptions.RequestException;
 import com.construcpunto.managament_equipments.services.IDeliveryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin(origins = {"http://localhost:5173"})
 @RestController
@@ -30,6 +32,15 @@ public class DeliveryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @GetMapping("/find-by-/{deliveryId}")
+    public ResponseEntity<?> findById(@PathVariable Long deliveryId) {
+        Optional<DeliveryEntity> delivery = deliveryService.findById(deliveryId);
+
+        if (delivery.isPresent())
+            return ResponseEntity.ok(delivery);
+
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("El domiciliario no se encuentra registrado");
+    }
     @GetMapping
 
     private ResponseEntity<?> validation(BindingResult result) {
