@@ -1,21 +1,16 @@
 package com.construcpunto.managament_equipments.services;
 
-import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
-import com.construcpunto.managament_equipments.dto.LoanEquipmentResponseDto;
-import com.construcpunto.managament_equipments.dto.PartialReturnDto;
-import com.construcpunto.managament_equipments.dto.viewLoanDto;
+import com.construcpunto.managament_equipments.dto.*;
 import com.construcpunto.managament_equipments.entities.*;
 import com.construcpunto.managament_equipments.exceptions.RequestException;
 import com.construcpunto.managament_equipments.repositories.*;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class LoanEquipmentService implements ILoanEquipmentService {
@@ -38,12 +33,18 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     @Autowired
     private IInvoiceRepository invoiceRepository;
 
+    @Autowired
+    private IReportService reportService;
+
 
     @Override
-    public ClientEntity save(LoanEquipmentRequestDto loanEquipmentRequestDto) {
+    public ClientEntity save(LoanEquipmentRequestDto loanEquipmentRequestDto) throws JRException {
         ClientEntity client;
 
         PromissoryNoteEntity promissoryNote = new PromissoryNoteEntity();
+
+        Map<String, Object> paramsReport = new HashMap<>();
+        List<InvoiceItemDto> itemsForDataSourceInvoice = new ArrayList<>();
 
         if (loanEquipmentRequestDto.getClientId() == 0L)
             client = loanEquipmentRequestDto.getClient();
@@ -83,7 +84,14 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             }
         }
 
-        return clientRepository.save(client);
+        clientRepository.save(client);
+
+        paramsReport = loadParamsReport(promissoryNote.getId(), false);
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
+
+        reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice);
+
+        return client;
     }
 
     Integer verifyStockBeforePromissoryNote(LoanEquipmentRequestDto loanEquipmentRequestDto) {
@@ -140,6 +148,59 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         promissoryNote.setComments(loanEquipmentRequestDto.getComments());
 
         return promissoryNote;
+    }
+
+    Map<String, Object> loadParamsReport(Long promissoryNoteId, Boolean isReturn) {
+
+        Map<String, Object> params = new HashMap<>();
+
+        LoanEquipmentResponseDto loanEquipmentResponse = findByPromissoryId(promissoryNoteId);
+
+        params.put("promissoryNoteId", promissoryNoteId);
+        params.put("clientName", loanEquipmentResponse.getClientName());
+        params.put("clientCedula", loanEquipmentResponse.getClientCedula());
+        params.put("clientAddress", loanEquipmentResponse.getAddressClient());
+        params.put("clientNumberPhone", loanEquipmentResponse.getNumberPhone());
+        params.put("deliveryDate", loanEquipmentResponse.getDeliveryDate());
+        params.put("deposit", loanEquipmentResponse.getDeposit());
+        params.put("comments", loanEquipmentResponse.getComments());
+
+        if (loanEquipmentResponse.getDeliveryName() != null) {
+            params.put("deliveryPrice", loanEquipmentResponse.getDeliveryPrice());
+            params.put("deliveryName", loanEquipmentResponse.getDeliveryName());
+            params.put("deliveryNumberPhone", loanEquipmentResponse.getDeliveryPhone());
+        }
+
+        if (isReturn) {
+            params.put("deliveryReturn", loanEquipmentResponse.getDeliveryReturn());
+            params.put("totalDays", loanEquipmentResponse.getTotalDays());
+            params.put("total", loanEquipmentResponse.getTotal());
+
+        }
+
+
+        return params;
+    }
+
+    List<InvoiceItemDto> loadItemsInvoice(Long promissoryNoteId) {
+        InvoiceItemDto invoiceItemDto = new InvoiceItemDto();
+        List<InvoiceItemDto> invoiceItemsDto = new ArrayList<>();
+
+        LoanEquipmentResponseDto loanEquipmentResponse = findByPromissoryId(promissoryNoteId);
+
+        for (int row = 0; row < loanEquipmentResponse.getLoanEquipments().length; row++) {
+            invoiceItemDto = new InvoiceItemDto();
+            invoiceItemDto.setEquipmentQuantity(loanEquipmentResponse.getLoanEquipments()[row][0]);
+            invoiceItemDto.setEquipmentName(loanEquipmentResponse.getLoanEquipments()[row][1]);
+            invoiceItemDto.setEquipmentUnitPrice(loanEquipmentResponse.getLoanEquipments()[row][2]);
+            invoiceItemDto.setLoanValueDay(loanEquipmentResponse.getLoanEquipments()[row][3]);
+            invoiceItemDto.setLoanTotal(loanEquipmentResponse.getLoanEquipments()[row][4]);
+
+            invoiceItemsDto.add(invoiceItemDto);
+        }
+
+        System.out.println("EL TAMANIO DE LOS ITEMS ES:" + invoiceItemsDto.size());
+        return invoiceItemsDto;
     }
 
     @Override
@@ -358,8 +419,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         }
 
         promissoryNote.setLoanEquipment(loanEquipments);
-
-
 
 
         promissoyNoteRepository.save(promissoryNoteDB);
