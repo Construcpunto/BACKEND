@@ -11,7 +11,10 @@ public class LoanEquipmentResponseDto {
     private String clientName;
     private String addressClient;
     private String numberPhone;
+
     private String deliveryName;
+    private String deliveryPhone;
+    private Double deliveryPrice;
 
     @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate deliveryDate;
@@ -19,7 +22,6 @@ public class LoanEquipmentResponseDto {
     private LocalDate deliveryReturn;
 
     private Double deposit;
-    private Double deliveryPrice;
     private String[][] loanEquipments;
     private Integer totalDays;
     private Double total;
@@ -99,6 +101,14 @@ public class LoanEquipmentResponseDto {
 
     public void setDeliveryPrice(Double deliveryPrice) {
         this.deliveryPrice = deliveryPrice;
+    }
+
+    public String getDeliveryPhone() {
+        return deliveryPhone;
+    }
+
+    public void setDeliveryPhone(String deliveryPhone) {
+        this.deliveryPhone = deliveryPhone;
     }
 
     public String[][] getLoanEquipments() {
