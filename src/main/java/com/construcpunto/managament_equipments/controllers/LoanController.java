@@ -35,14 +35,14 @@ public class LoanController {
     }
 
     @PostMapping("return-equipment/{promissoryNoteId}")
-    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId) {
+    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId) throws JRException {
         loanEquipmentService.returnEquipment(promissoryNoteId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("partial-return-equipment/{promissoryNoteId}")
     public ResponseEntity<?> partialReturnEquipments(@PathVariable Long promissoryNoteId,
-                                                     @RequestBody List<PartialReturnDto> partialReturnDtos) {
+                                                     @RequestBody List<PartialReturnDto> partialReturnDtos) throws JRException {
         loanEquipmentService.partialReturnEquipment(promissoryNoteId, partialReturnDtos);
         return ResponseEntity.ok().build();
     }
@@ -66,12 +66,12 @@ public class LoanController {
     public ResponseEntity<?> filter(@RequestParam(required = false, name = "delivery-date")
                                     @DateTimeFormat(pattern = "dd-MM-yyyy") LocalDate deliveryDate,
                                     @RequestParam(required = false, name = "client-cedula") Integer clientCedula,
-                                    @RequestParam(required = false) Boolean active) {
+                                    @RequestParam() Boolean active) {
 
         List<viewLoanDto> viewLoanDtos = new ArrayList<>();
 
         if (deliveryDate != null || clientCedula != null) {
-            viewLoanDtos = loanEquipmentService.filter(deliveryDate, clientCedula);
+            viewLoanDtos = loanEquipmentService.filter(deliveryDate, clientCedula, active);
             Collections.reverse(viewLoanDtos);
 
             return ResponseEntity.ok(viewLoanDtos);

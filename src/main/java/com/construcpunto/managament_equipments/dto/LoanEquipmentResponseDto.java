@@ -29,6 +29,7 @@ public class LoanEquipmentResponseDto {
 
     public LoanEquipmentResponseDto(int rows) {
         this.loanEquipments = new String[rows][6];
+        this.deliveryName = "";
     }
 
     public Integer getClientCedula() {

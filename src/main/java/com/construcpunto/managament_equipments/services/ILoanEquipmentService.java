@@ -18,11 +18,11 @@ public interface ILoanEquipmentService {
     List<viewLoanDto> findAllViewLoanDto(Boolean active);
     List<LoanEquipmentEntity> findAll();
     LoanEquipmentResponseDto findByPromissoryId(Long promissoryId);
-    List<viewLoanDto> filter(LocalDate deliveryDate, Integer clientCedula);
+    List<viewLoanDto> filter(LocalDate deliveryDate, Integer clientCedul, Boolean active);
 
     void delete(LoanEquipmentEntity loanEquipment);
 
-    void returnEquipment(Long promissoryNoteId);
-    void partialReturnEquipment(Long promissoryNoteId, List<PartialReturnDto> partialReturnDto);
+    void returnEquipment(Long promissoryNoteId) throws JRException;
+    void partialReturnEquipment(Long promissoryNoteId, List<PartialReturnDto> partialReturnDto) throws JRException;
 
 }

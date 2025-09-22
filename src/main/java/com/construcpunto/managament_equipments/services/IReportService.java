@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface IReportService {
 
-    void generatePromisoryNote(Map<String,Object> params, List<InvoiceItemDto> items) throws JRException;
+    void generatePromisoryNote(Map<String,Object> params, List<InvoiceItemDto> items, Boolean invoice) throws JRException;
 }

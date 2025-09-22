@@ -89,7 +89,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         paramsReport = loadParamsReport(promissoryNote.getId(), false);
         itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
 
-        reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice);
+        reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, false);
 
         return client;
     }
@@ -136,7 +136,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             promissoryNote.setDelivery(delivery);
             promissoryNote.setDeliveryPrice(loanEquipmentRequestDto.getDeliveryPrice());
 
-        } else if(loanEquipmentRequestDto.getDelivery() != null){
+        } else if (loanEquipmentRequestDto.getDelivery() != null) {
             delivery = loanEquipmentRequestDto.getDelivery();
             deliveryRepository.save(delivery);
             promissoryNote.setDelivery(delivery);
@@ -150,58 +150,6 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         return promissoryNote;
     }
 
-    Map<String, Object> loadParamsReport(Long promissoryNoteId, Boolean isReturn) {
-
-        Map<String, Object> params = new HashMap<>();
-
-        LoanEquipmentResponseDto loanEquipmentResponse = findByPromissoryId(promissoryNoteId);
-
-        params.put("promissoryNoteId", promissoryNoteId);
-        params.put("clientName", loanEquipmentResponse.getClientName());
-        params.put("clientCedula", loanEquipmentResponse.getClientCedula());
-        params.put("clientAddress", loanEquipmentResponse.getAddressClient());
-        params.put("clientNumberPhone", loanEquipmentResponse.getNumberPhone());
-        params.put("deliveryDate", loanEquipmentResponse.getDeliveryDate());
-        params.put("deposit", loanEquipmentResponse.getDeposit());
-        params.put("comments", loanEquipmentResponse.getComments());
-
-        if (loanEquipmentResponse.getDeliveryName() != null) {
-            params.put("deliveryPrice", loanEquipmentResponse.getDeliveryPrice());
-            params.put("deliveryName", loanEquipmentResponse.getDeliveryName());
-            params.put("deliveryNumberPhone", loanEquipmentResponse.getDeliveryPhone());
-        }
-
-        if (isReturn) {
-            params.put("deliveryReturn", loanEquipmentResponse.getDeliveryReturn());
-            params.put("totalDays", loanEquipmentResponse.getTotalDays());
-            params.put("total", loanEquipmentResponse.getTotal());
-
-        }
-
-
-        return params;
-    }
-
-    List<InvoiceItemDto> loadItemsInvoice(Long promissoryNoteId) {
-        InvoiceItemDto invoiceItemDto = new InvoiceItemDto();
-        List<InvoiceItemDto> invoiceItemsDto = new ArrayList<>();
-
-        LoanEquipmentResponseDto loanEquipmentResponse = findByPromissoryId(promissoryNoteId);
-
-        for (int row = 0; row < loanEquipmentResponse.getLoanEquipments().length; row++) {
-            invoiceItemDto = new InvoiceItemDto();
-            invoiceItemDto.setEquipmentQuantity(loanEquipmentResponse.getLoanEquipments()[row][0]);
-            invoiceItemDto.setEquipmentName(loanEquipmentResponse.getLoanEquipments()[row][1]);
-            invoiceItemDto.setEquipmentUnitPrice(loanEquipmentResponse.getLoanEquipments()[row][2]);
-            invoiceItemDto.setLoanValueDay(loanEquipmentResponse.getLoanEquipments()[row][3]);
-            invoiceItemDto.setLoanTotal(loanEquipmentResponse.getLoanEquipments()[row][4]);
-
-            invoiceItemsDto.add(invoiceItemDto);
-        }
-
-        System.out.println("EL TAMANIO DE LOS ITEMS ES:" + invoiceItemsDto.size());
-        return invoiceItemsDto;
-    }
 
     @Override
     public List<LoanEquipmentEntity> findAll() {
@@ -233,9 +181,10 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     }
 
     @Override
-    public List<viewLoanDto> filter(LocalDate deliveryDate, Integer clientCedula) {
+    public List<viewLoanDto> filter(LocalDate deliveryDate, Integer clientCedula, Boolean active) {
         List<PromissoryNoteEntity> promissoryNotes = new ArrayList<>();
-        List<LoanEquipmentEntity> loanEquipments = new ArrayList<>();
+        List<LoanEquipmentEntity> loanEquipmentsActive = new ArrayList<>();
+        List<LoanEquipmentEntity> loanEquipmentsNoActive = new ArrayList<>();
 
         if (deliveryDate != null) {
             promissoryNotes.addAll(promissoyNoteRepository.findByDeliveryDate(deliveryDate));
@@ -252,10 +201,20 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         }
 
         for (PromissoryNoteEntity promissory : promissoryNotes) {
-            loanEquipments.addAll(promissory.getLoanEquipment());
+            for (LoanEquipmentEntity loanEquipment : promissory.getLoanEquipment()) {
+                if (loanEquipment.getEquipmentReturn())
+                    loanEquipmentsNoActive.add(loanEquipment);
+                else
+                    loanEquipmentsActive.add(loanEquipment);
+            }
         }
 
-        return convertToDto(loanEquipments);
+        if (active) {
+            return convertToDto(loanEquipmentsActive);
+
+        }
+
+        return convertToDto(loanEquipmentsNoActive);
     }
 
 
@@ -276,6 +235,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         if (promissoryNote.getDelivery() != null) {
             delivery = promissoryNote.getDelivery();
             loanEquipmentResponse.setDeliveryName(delivery.getName());
+            loanEquipmentResponse.setDeliveryPrice(promissoryNote.getDeliveryPrice());
+            loanEquipmentResponse.setDeliveryPhone(promissoryNote.getDelivery().getPhoneNumber());
         }
 
         for (int i = 0; i < loanEquipments.size(); i++) {
@@ -286,7 +247,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             if (loanEquipments.get(i).quantityDays(promissoryNote.getDeliveryDate()) <= 5)
                 equipments[i][4] = loanEquipments.get(i).getTotal().toString();
             else {
-                Double totalUpdate = (loanEquipments.get(i).getTotal() * loanEquipments.get(i).quantityDays(promissoryNote.getDeliveryDate()));
+                Double totalUpdate = (loanEquipments.get(i).getPriceDay() * loanEquipments.get(i).quantityDays(promissoryNote.getDeliveryDate()));
                 equipments[i][4] = String.valueOf(totalUpdate);
             }
             equipments[i][5] = loanEquipments.get(i).getEquipment().getId().toString();
@@ -298,11 +259,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         loanEquipmentResponse.setClientName(client.getName());
         loanEquipmentResponse.setAddressClient(client.getAddress());
         loanEquipmentResponse.setNumberPhone(client.getNumberPhone());
-
-
         loanEquipmentResponse.setDeliveryDate(promissoryNote.getDeliveryDate());
         loanEquipmentResponse.setDeposit(promissoryNote.getDeposit());
-        loanEquipmentResponse.setDeliveryPrice(promissoryNote.getDeliveryPrice());
         loanEquipmentResponse.setLoanEquipments(equipments);
         loanEquipmentResponse.setComments(promissoryNote.getComments());
 
@@ -319,12 +277,15 @@ public class LoanEquipmentService implements ILoanEquipmentService {
     }
 
     @Override
-    public void returnEquipment(Long promissoryNoteId) {
+    public void returnEquipment(Long promissoryNoteId) throws JRException {
         InvoiceEntity invoice = new InvoiceEntity();
         Double totalInvoice = 0.0;
 
         LoanEquipmentEntity loanEquipment;
         EquipmentEntity equipment;
+
+        Map<String, Object> paramsReport = new HashMap<>();
+        List<InvoiceItemDto> itemsForDataSourceInvoice = new ArrayList<>();
 
         PromissoryNoteEntity promissoryNote =
                 promissoyNoteRepository.findById(promissoryNoteId).
@@ -358,10 +319,15 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         invoice.setTotal(totalInvoice);
         invoiceRepository.save(invoice);
 
+        paramsReport = loadParamsReport(promissoryNote.getId(), true);
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
+
+        reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, true);
+
     }
 
     @Override
-    public void partialReturnEquipment(Long promissoryNoteId, List<PartialReturnDto> partialReturnDto) {
+    public void partialReturnEquipment(Long promissoryNoteId, List<PartialReturnDto> partialReturnDto) throws JRException {
         PromissoryNoteEntity promissoryNoteDB =
                 promissoyNoteRepository.findById(promissoryNoteId).
                         orElseThrow(() -> new RequestException("El pagare no se encuentra", HttpStatus.NOT_FOUND));
@@ -375,6 +341,9 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         EquipmentEntity equipment = new EquipmentEntity();
 
+        Map<String, Object> paramsReport = new HashMap<>();
+        List<InvoiceItemDto> itemsForDataSourceInvoice = new ArrayList<>();
+
         promissoryNote.setClient(promissoryNoteDB.getClient());
         promissoryNote.setDeliveryDate(promissoryNoteDB.getDeliveryDate());
         promissoryNote.setDeposit(promissoryNoteDB.getDeposit());
@@ -386,8 +355,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             promissoryNote.setComments(promissoryNoteDB.getComments());
 
         for (PartialReturnDto partialReturn : partialReturnDto) {
-            System.out.println("-------------------------" + "  " + partialReturn.toString() + "  " + "-------------------------");
-
+//            System.out.println("-------------------------" + "  " + partialReturn.toString() + "  " + "-------------------------");
             equipment = new EquipmentEntity();
             loan = new LoanEquipmentEntity();
             equipment = equipmentRepository.findById(partialReturn.getEquipmentId()).orElseThrow(() -> new RequestException("No se encuentra el equipo", HttpStatus.NOT_FOUND));
@@ -414,6 +382,10 @@ public class LoanEquipmentService implements ILoanEquipmentService {
                     System.out.println("-------------------------" + "  " + totalDays + "  " + "-------------------------");
 
                     promissoryNoteDB.getLoanEquipment().get(i).reCalculateTotal((int) totalDays);
+
+                    if (promissoryNoteDB.getLoanEquipment().get(i).getQuantity().equals(0)) {
+                        promissoryNoteDB.getLoanEquipment().remove(i);
+                    }
                 }
             }
         }
@@ -424,6 +396,15 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         promissoyNoteRepository.save(promissoryNoteDB);
         returnEquipment(promissoryNoteId);
         promissoyNoteRepository.save(promissoryNote);
+
+        paramsReport = loadParamsReport(promissoryNoteDB.getId(), true);
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNoteDB.getId());
+        reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, true);
+
+
+        paramsReport = loadParamsReport(promissoryNote.getId(), true);
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
+        reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, false);
 
 
     }
@@ -466,6 +447,59 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         }
 
         return viewLoanDtos;
+    }
+
+
+    Map<String, Object> loadParamsReport(Long promissoryNoteId, Boolean isReturn) {
+
+        Map<String, Object> params = new HashMap<>();
+
+        LoanEquipmentResponseDto loanEquipmentResponse = findByPromissoryId(promissoryNoteId);
+
+        params.put("promissoryNoteId", promissoryNoteId);
+        params.put("clientName", loanEquipmentResponse.getClientName());
+        params.put("clientCedula", loanEquipmentResponse.getClientCedula());
+        params.put("clientAddress", loanEquipmentResponse.getAddressClient());
+        params.put("clientNumberPhone", loanEquipmentResponse.getNumberPhone());
+        params.put("deliveryDate", loanEquipmentResponse.getDeliveryDate());
+        params.put("deposit", loanEquipmentResponse.getDeposit());
+        params.put("comments", loanEquipmentResponse.getComments());
+
+        if (!Objects.equals(loanEquipmentResponse.getDeliveryName(), "")) {
+            params.put("deliveryPrice", loanEquipmentResponse.getDeliveryPrice());
+            params.put("deliveryName", loanEquipmentResponse.getDeliveryName());
+            params.put("deliveryNumberPhone", loanEquipmentResponse.getDeliveryPhone());
+        }
+
+        if (isReturn) {
+            params.put("deliveryReturn", loanEquipmentResponse.getDeliveryReturn());
+            params.put("totalDays", loanEquipmentResponse.getTotalDays());
+            params.put("total", loanEquipmentResponse.getTotal());
+
+        }
+
+
+        return params;
+    }
+
+    List<InvoiceItemDto> loadItemsInvoice(Long promissoryNoteId) {
+        InvoiceItemDto invoiceItemDto = new InvoiceItemDto();
+        List<InvoiceItemDto> invoiceItemsDto = new ArrayList<>();
+
+        LoanEquipmentResponseDto loanEquipmentResponse = findByPromissoryId(promissoryNoteId);
+
+        for (int row = 0; row < loanEquipmentResponse.getLoanEquipments().length; row++) {
+            invoiceItemDto = new InvoiceItemDto();
+            invoiceItemDto.setEquipmentQuantity(loanEquipmentResponse.getLoanEquipments()[row][0]);
+            invoiceItemDto.setEquipmentName(loanEquipmentResponse.getLoanEquipments()[row][1]);
+            invoiceItemDto.setEquipmentUnitPrice(loanEquipmentResponse.getLoanEquipments()[row][2]);
+            invoiceItemDto.setLoanValueDay(loanEquipmentResponse.getLoanEquipments()[row][3]);
+            invoiceItemDto.setLoanTotal(loanEquipmentResponse.getLoanEquipments()[row][4]);
+
+            invoiceItemsDto.add(invoiceItemDto);
+        }
+
+        return invoiceItemsDto;
     }
 
     @Override

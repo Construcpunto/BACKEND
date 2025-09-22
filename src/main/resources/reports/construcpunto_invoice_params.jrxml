@@ -184,7 +184,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="d252f0e7-2515-429f-8e7a-39ec703f1d5d" x="420" y="160" width="210" height="20">
+		<element kind="textField" uuid="d252f0e7-2515-429f-8e7a-39ec703f1d5d" x="420" y="160" width="210" height="20" vTextAlign="Middle">
 			<expression><![CDATA[$P{clientNumberPhone}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
