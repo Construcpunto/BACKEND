@@ -1,0 +1,57 @@
+services:
+  mysql8:
+    image: mysql:8
+    container_name: mysql8
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - construcpunto
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  #    restart: always
+
+
+  backend:
+    image: juanmanuel18/backend-construcpunto:0.0.1
+    container_name: backend-managament-equipments
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    networks:
+      - construcpunto
+    depends_on:
+      mysql8:
+        condition: service_healthy
+#    restart: always
+
+  frontend:
+    image: juanmanuel18/frontend-construcpunto:0.0.1
+    container_name: frontend-managament-equipments
+    ports:
+      - "80:80"
+    env_file:
+      - .env
+    networks:
+      - construcpunto
+    depends_on:
+      - backend
+#    restart: always
+
+
+volumes:
+  mysql-data:
+    name: mysql-data
+
+networks:
+  construcpunto:
+    name: construcpunto
+    external: false
+
