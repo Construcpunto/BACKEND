@@ -8,6 +8,7 @@ services:
       - .env
     volumes:
       - mysql-data:/var/lib/mysql
+      - "C:/Users/juanm/Downloads/Prueba_de_Bind_Mount:/backup"
     networks:
       - construcpunto
     healthcheck:
@@ -19,7 +20,7 @@ services:
 
 
   backend:
-    image: juanmanuel18/backend-construcpunto:0.0.1
+    image: juanmanuel18/backend-construcpunto:0.0.7
     container_name: backend-managament-equipments
     ports:
       - "8080:8080"
@@ -30,10 +31,12 @@ services:
     depends_on:
       mysql8:
         condition: service_healthy
+    volumes:
+      - "C:/Users/juanm/Downloads/Prueba_de_Bind_Mount:/app/generated-pdfs/"
 #    restart: always
 
   frontend:
-    image: juanmanuel18/frontend-construcpunto:0.0.1
+    image: juanmanuel18/frontend-construcpunto:0.0.2
     container_name: frontend-managament-equipments
     ports:
       - "80:80"
@@ -49,6 +52,8 @@ services:
 volumes:
   mysql-data:
     name: mysql-data
+  pdf-data:
+    name: pdf-data
 
 networks:
   construcpunto:

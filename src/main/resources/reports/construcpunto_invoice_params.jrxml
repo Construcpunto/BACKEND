@@ -36,7 +36,7 @@
 		<element kind="image" uuid="1c003177-754c-448f-8ce1-16868856f545" x="1" y="10" width="229" height="93">
 			<expression><![CDATA[$P{REPORT_DIR}]]></expression>
 		</element>
-		<element kind="staticText" uuid="b91063c7-3e8c-4cbf-a463-ebe22dfd8bef" x="300" y="15" width="210" height="64" bold="true" hTextAlign="Center">
+		<element kind="staticText" uuid="b91063c7-3e8c-4cbf-a463-ebe22dfd8bef" x="300" y="15" width="210" height="64" fontName="Arial" bold="true" hTextAlign="Center">
 			<text><![CDATA[DARÍO DE JESÚS CARDONA VALENCIA
 NIT. 71.700.544-7 IVA
 Tel: 292 62 55 - 291 46 67
@@ -47,7 +47,7 @@ E-mail: construcpunto@gmail.com]]></text>
 			<pen lineWidth="1.0" lineStyle="Solid"/>
 		</element>
 		<element kind="line" uuid="0e158455-7106-4f5f-9abd-b3baa86226e5" x="660" y="46" width="120" height="1"/>
-		<element kind="textField" uuid="2e1a5967-ffcb-480d-8d30-d1df1ef14db6" mode="Opaque" x="660" y="15" width="120" height="34" forecolor="#FFFFFF" backcolor="#030000" textAdjust="StretchHeight" linkType="None" linkTarget="Self" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="2e1a5967-ffcb-480d-8d30-d1df1ef14db6" mode="Opaque" x="660" y="15" width="120" height="34" forecolor="#FFFFFF" backcolor="#030000" fontName="Arial" textAdjust="StretchHeight" linkType="None" linkTarget="Self" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA["CONTRATO DE ALQUILER"]]></expression>
 			<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -56,15 +56,15 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="45cadd6e-af4f-441f-bfb6-d8b78f284f24" x="680" y="49" width="38" height="29" bold="true" hTextAlign="Right" vTextAlign="Middle">
+		<element kind="staticText" uuid="45cadd6e-af4f-441f-bfb6-d8b78f284f24" x="680" y="49" width="38" height="29" fontName="Arial" bold="true" hTextAlign="Right" vTextAlign="Middle">
 			<text><![CDATA[N#]]></text>
 			<box rightPadding="0"/>
 		</element>
-		<element kind="textField" uuid="a501cbeb-ff94-4662-8f9c-86d5541c1bf0" x="720" y="49" width="43" height="29" forecolor="#CF1D17" italic="true" bold="true" hTextAlign="Left" vTextAlign="Middle">
+		<element kind="textField" uuid="a501cbeb-ff94-4662-8f9c-86d5541c1bf0" x="720" y="49" width="43" height="29" forecolor="#CF1D17" bold="true" italic="true" hTextAlign="Left" vTextAlign="Middle">
 			<expression><![CDATA[$P{promissoryNoteId}]]></expression>
 		</element>
 		<element kind="rectangle" uuid="8400d319-1213-490d-a0d2-5675e1c22862" x="80" y="120" width="650" height="100" radius="16"/>
-		<element kind="staticText" uuid="2ce0cbe7-87ed-43b3-80fc-cf7b6622fe47" mode="Opaque" x="100" y="120" width="80" height="20" backcolor="#B0B0B0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="2ce0cbe7-87ed-43b3-80fc-cf7b6622fe47" mode="Opaque" x="100" y="120" width="99" height="20" backcolor="#B0B0B0" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Fecha Entrega:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
@@ -74,7 +74,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="3db9df6c-4afd-4241-8778-9d7163e6ebeb" mode="Opaque" x="340" y="120" width="100" height="20" backcolor="#B0B0B0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="3db9df6c-4afd-4241-8778-9d7163e6ebeb" mode="Opaque" x="340" y="120" width="110" height="20" backcolor="#B0B0B0" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Fecha Devolución:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
@@ -84,7 +84,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="dcb6c4cb-11df-400a-bf5e-d34b800b4a7c" mode="Opaque" x="630" y="120" width="80" height="20" backcolor="#B0B0B0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="dcb6c4cb-11df-400a-bf5e-d34b800b4a7c" mode="Opaque" x="630" y="120" width="80" height="20" backcolor="#B0B0B0" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Deposito:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
@@ -94,7 +94,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="bbe6c561-25d8-4e06-a0fc-016b3d6b8948" mode="Opaque" x="630" y="180" width="100" height="20" backcolor="#B0B0B0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="bbe6c561-25d8-4e06-a0fc-016b3d6b8948" mode="Opaque" x="630" y="180" width="100" height="20" backcolor="#B0B0B0" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Flete:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
@@ -104,31 +104,31 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="5766a23a-e335-4126-b7ab-c3eebc1b8b62" mode="Transparent" x="80" y="140" width="100" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="5766a23a-e335-4126-b7ab-c3eebc1b8b62" mode="Transparent" x="80" y="140" width="100" height="20" backcolor="#FFFFFF" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Nombre:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="f3a6da68-f19b-492c-873f-85d1eeee0816" mode="Transparent" x="80" y="160" width="100" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="f3a6da68-f19b-492c-873f-85d1eeee0816" mode="Transparent" x="80" y="160" width="100" height="20" backcolor="#FFFFFF" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[C.C:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="6dbdac56-3906-4204-825a-bd6bd01cf8eb" mode="Transparent" x="80" y="180" width="100" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="6dbdac56-3906-4204-825a-bd6bd01cf8eb" mode="Transparent" x="80" y="180" width="100" height="20" backcolor="#FFFFFF" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Dirección:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="ff382660-c9f7-4bee-a5cd-fa721549265f" mode="Transparent" x="320" y="160" width="100" height="20" backcolor="#FFFFFF" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="ff382660-c9f7-4bee-a5cd-fa721549265f" mode="Transparent" x="320" y="160" width="100" height="20" backcolor="#FFFFFF" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Tel./Cel.:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="16355b84-e87e-4324-af83-b1d04bf73ce0" mode="Opaque" x="410" y="200" width="120" height="20" backcolor="#B0B0B0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="16355b84-e87e-4324-af83-b1d04bf73ce0" mode="Opaque" x="410" y="200" width="120" height="20" backcolor="#B0B0B0" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Tel/Cel Domiciliario:]]></text>
 			<box>
 				<pen lineWidth="1.0"/>
@@ -138,7 +138,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="134bd828-e8ac-416c-b789-79f4836a7261" mode="Opaque" x="100" y="200" width="118" height="20" backcolor="#B0B0B0" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="134bd828-e8ac-416c-b789-79f4836a7261" mode="Opaque" x="99" y="200" width="131" height="20" backcolor="#B0B0B0" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Nombre domiciliario:]]></text>
 			<box>
 				<pen lineWidth="0.0" lineColor="#B0B0B0"/>
@@ -148,7 +148,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="6f2c760d-9586-4b01-a50c-bf12d420820a" x="180" y="120" width="160" height="20" hTextAlign="Left" vTextAlign="Middle">
+		<element kind="textField" uuid="6f2c760d-9586-4b01-a50c-bf12d420820a" x="199" y="120" width="141" height="20" fontName="Arial" hTextAlign="Left" vTextAlign="Middle">
 			<expression><![CDATA[$P{deliveryDate}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -157,7 +157,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="9f624260-d43e-4826-a439-027186a57db6" x="440" y="120" width="190" height="20" blankWhenNull="true" vTextAlign="Middle">
+		<element kind="textField" uuid="9f624260-d43e-4826-a439-027186a57db6" x="450" y="120" width="180" height="20" fontName="Arial" blankWhenNull="true" vTextAlign="Middle">
 			<expression><![CDATA[$P{deliveryReturn}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -166,7 +166,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="e07f590a-8cd1-4ca3-ab09-bc6e8c2f5cab" x="180" y="140" width="450" height="20" vTextAlign="Middle">
+		<element kind="textField" uuid="e07f590a-8cd1-4ca3-ab09-bc6e8c2f5cab" x="180" y="140" width="450" height="20" fontName="Arial" vTextAlign="Middle">
 			<expression><![CDATA[$P{clientName}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -175,7 +175,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="856be5c0-a632-43cb-aab2-5f9d5cd1d2d1" x="180" y="160" width="140" height="20" vTextAlign="Middle">
+		<element kind="textField" uuid="856be5c0-a632-43cb-aab2-5f9d5cd1d2d1" x="180" y="160" width="140" height="20" fontName="Arial" vTextAlign="Middle">
 			<expression><![CDATA[$P{clientCedula}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -184,7 +184,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="d252f0e7-2515-429f-8e7a-39ec703f1d5d" x="420" y="160" width="210" height="20" vTextAlign="Middle">
+		<element kind="textField" uuid="d252f0e7-2515-429f-8e7a-39ec703f1d5d" x="420" y="160" width="210" height="20" fontName="Arial" vTextAlign="Middle">
 			<expression><![CDATA[$P{clientNumberPhone}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -193,7 +193,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="007f3060-5eb5-4ecc-b9e7-3752706e9b0c" x="630" y="140" width="100" height="40" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="007f3060-5eb5-4ecc-b9e7-3752706e9b0c" x="630" y="140" width="100" height="40" fontName="Arial" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{deposit}]]></expression>
 			<box leftPadding="0">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -202,7 +202,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="c157fa8d-ea3b-4fd3-8706-2fc63e39f720" x="180" y="180" width="450" height="20" vTextAlign="Middle">
+		<element kind="textField" uuid="c157fa8d-ea3b-4fd3-8706-2fc63e39f720" x="180" y="180" width="450" height="20" fontName="Arial" vTextAlign="Middle">
 			<expression><![CDATA[$P{clientAddress}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -211,7 +211,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="ff7ea015-1a07-413b-9e5f-3776e1ce1dae" x="218" y="200" width="192" height="20" blankWhenNull="true" vTextAlign="Middle">
+		<element kind="textField" uuid="ff7ea015-1a07-413b-9e5f-3776e1ce1dae" x="230" y="200" width="180" height="20" fontName="Arial" blankWhenNull="true" vTextAlign="Middle">
 			<expression><![CDATA[$P{deliveryName}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -220,7 +220,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="206e12f2-99b6-40ac-899f-e5050310e9f4" x="530" y="200" width="100" height="20" blankWhenNull="true" vTextAlign="Middle">
+		<element kind="textField" uuid="206e12f2-99b6-40ac-899f-e5050310e9f4" x="530" y="200" width="100" height="20" fontName="Arial" blankWhenNull="true" vTextAlign="Middle">
 			<expression><![CDATA[$P{deliveryNumberPhone}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -229,7 +229,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="82e42d29-e21c-41d6-a2cb-f8776271082a" x="630" y="200" width="100" height="20" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="82e42d29-e21c-41d6-a2cb-f8776271082a" x="630" y="200" width="100" height="20" fontName="Arial" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{deliveryPrice}]]></expression>
 			<box leftPadding="0">
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -243,19 +243,19 @@ E-mail: construcpunto@gmail.com]]></text>
 		<property name="com.jaspersoft.studio.unit.height" value="px"/>
 	</pageHeader>
 	<columnHeader height="31" splitType="Stretch">
-		<element kind="staticText" uuid="2efaab71-14e9-491a-8837-6535b47a4959" mode="Opaque" x="89" y="8" width="79" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="2efaab71-14e9-491a-8837-6535b47a4959" mode="Opaque" x="89" y="8" width="79" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Cantidad]]></text>
 		</element>
-		<element kind="staticText" uuid="8d506aea-1e89-477d-8676-5c958c50d26f" mode="Opaque" x="189" y="10" width="209" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="8d506aea-1e89-477d-8676-5c958c50d26f" mode="Opaque" x="189" y="10" width="209" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Descripción]]></text>
 		</element>
-		<element kind="staticText" uuid="a14050ec-7e34-48b5-9722-0bf7f673cf0d" mode="Opaque" x="421" y="10" width="78" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="a14050ec-7e34-48b5-9722-0bf7f673cf0d" mode="Opaque" x="421" y="10" width="78" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Vr. Unt. Día]]></text>
 		</element>
-		<element kind="staticText" uuid="ff025c5f-d2bc-4a0f-8173-7faba61b2625" mode="Opaque" x="531" y="10" width="78" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="ff025c5f-d2bc-4a0f-8173-7faba61b2625" mode="Opaque" x="531" y="10" width="78" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Vr. Día]]></text>
 		</element>
-		<element kind="staticText" uuid="3ea2de44-d257-4464-9396-e576980cf851" mode="Opaque" x="629" y="8" width="78" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="3ea2de44-d257-4464-9396-e576980cf851" mode="Opaque" x="629" y="8" width="78" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Total]]></text>
 		</element>
 		<element kind="line" uuid="e9d2002a-c8ee-4649-a258-640dad29110c" positionType="FixRelativeToBottom" x="-6" y="0" width="802" height="1">
@@ -265,7 +265,7 @@ E-mail: construcpunto@gmail.com]]></text>
 	</columnHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
-			<element kind="textField" uuid="9daeb1a5-336e-4e79-8d35-ba8f9b45b773" x="89" y="0" width="79" height="20" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="9daeb1a5-336e-4e79-8d35-ba8f9b45b773" x="89" y="0" width="79" height="20" fontName="Arial" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{equipmentQuantity}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab6bef46-6fe7-4fee-83fb-4751a401378f"/>
 				<box>
@@ -275,7 +275,7 @@ E-mail: construcpunto@gmail.com]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="eacd75cd-a525-4b9b-885a-cd77e08dbed3" x="189" y="0" width="208" height="20" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="eacd75cd-a525-4b9b-885a-cd77e08dbed3" x="189" y="0" width="208" height="20" fontName="Arial" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{equipmentName}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a62fb1e9-c164-40b6-a92d-5badd597ec10"/>
 				<box>
@@ -285,7 +285,7 @@ E-mail: construcpunto@gmail.com]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="b5fcc308-24dc-4ddf-9f11-979917a9b1c7" x="421" y="0" width="78" height="20" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="b5fcc308-24dc-4ddf-9f11-979917a9b1c7" x="421" y="0" width="78" height="20" fontName="Arial" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{equipmentUnitPrice}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="abffc3bb-8a9c-46d1-a9bb-2f1c62b83b71"/>
 				<box>
@@ -295,7 +295,7 @@ E-mail: construcpunto@gmail.com]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="42aadb13-e0e3-4ccd-9a16-9a87a8e5dc22" x="531" y="0" width="78" height="20" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="42aadb13-e0e3-4ccd-9a16-9a87a8e5dc22" x="531" y="0" width="78" height="20" fontName="Arial" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{loanValueDay}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d221d4b5-3f92-4806-8b72-9e9496b14a60"/>
 				<box>
@@ -305,7 +305,7 @@ E-mail: construcpunto@gmail.com]]></text>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 			</element>
-			<element kind="textField" uuid="aa6b0c30-9692-4c12-9c91-f54e4e5c6a55" x="629" y="0" width="78" height="20" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
+			<element kind="textField" uuid="aa6b0c30-9692-4c12-9c91-f54e4e5c6a55" x="629" y="0" width="78" height="20" fontName="Arial" textAdjust="StretchHeight" blankWhenNull="false" hTextAlign="Center" vTextAlign="Middle">
 				<expression><![CDATA[$F{loanTotal}]]></expression>
 				<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14330c2d-3d02-4287-8037-258f0835b959"/>
 				<box>
@@ -322,7 +322,7 @@ E-mail: construcpunto@gmail.com]]></text>
 		<element kind="line" uuid="fa5e88d5-a011-4e32-8f12-ce923f903111" positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1">
 			<pen lineWidth="0.5" lineColor="#999999"/>
 		</element>
-		<element kind="staticText" uuid="31c49002-c27a-42da-8b0f-ffe14df9ef0b" mode="Opaque" x="81" y="10" width="88" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="31c49002-c27a-42da-8b0f-ffe14df9ef0b" mode="Opaque" x="81" y="10" width="88" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Observaciones:]]></text>
 			<box>
 				<pen lineWidth="1.0" lineColor="#030000"/>
@@ -332,21 +332,21 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="b0e99a9e-ed98-4843-8e02-d068c59ec8c1" mode="Opaque" x="410" y="10" width="79" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="b0e99a9e-ed98-4843-8e02-d068c59ec8c1" mode="Opaque" x="410" y="10" width="79" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[TOTAL DÍAS:]]></text>
 			<box>
 				<pen lineWidth="1.0" lineColor="#030000"/>
 				<topPen lineWidth="0.5"/>
 			</box>
 		</element>
-		<element kind="staticText" uuid="89fe5dc8-f230-47fd-a15a-b0df8910b58d" mode="Opaque" x="570" y="10" width="69" height="19" forecolor="#FFFFFF" backcolor="#050000" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="89fe5dc8-f230-47fd-a15a-b0df8910b58d" mode="Opaque" x="570" y="10" width="69" height="19" forecolor="#FFFFFF" backcolor="#050000" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[TOTAL]]></text>
 			<box>
 				<pen lineWidth="1.0" lineColor="#030000"/>
 				<topPen lineWidth="0.5"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="18c426b5-b497-438d-8cea-891ddc5a599c" x="169" y="10" width="211" height="19" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
+		<element kind="textField" uuid="18c426b5-b497-438d-8cea-891ddc5a599c" x="169" y="10" width="211" height="19" fontName="Arial" blankWhenNull="true" hTextAlign="Left" vTextAlign="Middle">
 			<expression><![CDATA[$P{comments}]]></expression>
 			<box leftPadding="10">
 				<pen lineWidth="1.0"/>
@@ -356,7 +356,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="6971aec1-006c-41f2-b185-a3280cf5e95f" x="489" y="10" width="61" height="19" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="textField" uuid="6971aec1-006c-41f2-b185-a3280cf5e95f" x="489" y="10" width="61" height="19" fontName="Arial" blankWhenNull="true" hTextAlign="Center" vTextAlign="Middle">
 			<expression><![CDATA[$P{totalDays}]]></expression>
 			<box leftPadding="0">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -365,7 +365,7 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="textField" uuid="35723912-2f52-4453-8111-013669e80c6d" x="639" y="10" width="69" height="19" blankWhenNull="true" vTextAlign="Middle">
+		<element kind="textField" uuid="35723912-2f52-4453-8111-013669e80c6d" x="639" y="10" width="69" height="19" fontName="Arial" blankWhenNull="true" vTextAlign="Middle">
 			<expression><![CDATA[$P{total}]]></expression>
 			<box leftPadding="10">
 				<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -387,11 +387,11 @@ E-mail: construcpunto@gmail.com]]></text>
 				<expression><![CDATA[new java.util.Date()]]></expression>
 			</element>
 		</element>
-		<element kind="staticText" uuid="5adf2fbb-c9d3-46be-b23d-a0d361f7c465" stretchType="NoStretch" x="9" y="10" width="772" height="30" forecolor="#B0403C" bold="true" hTextAlign="Left" vTextAlign="Middle">
+		<element kind="staticText" uuid="5adf2fbb-c9d3-46be-b23d-a0d361f7c465" stretchType="NoStretch" x="9" y="10" width="772" height="30" forecolor="#B0403C" fontName="Arial" bold="true" hTextAlign="Left" vTextAlign="Middle">
 			<text><![CDATA[La firma de este documento hace responsable al titular de cualquier perdida o daño ocasionado al equipo durante el tiempo de alquiler. De igual forma el equipo debe ser entregado en las mismas condiciones que se recibió]]></text>
 		</element>
 		<element kind="rectangle" uuid="cc58dd3e-46ce-4841-ad32-bb2aec61e867" x="11" y="44" width="781" height="33" radius="10"/>
-		<element kind="staticText" uuid="e1f97330-7603-4445-ab02-f8dbd83ba5be" x="31" y="50" width="90" height="21" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="e1f97330-7603-4445-ab02-f8dbd83ba5be" x="20" y="50" width="101" height="21" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[Recibí completo:]]></text>
 			<box>
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -406,7 +406,7 @@ E-mail: construcpunto@gmail.com]]></text>
 		<element kind="line" uuid="bf60da41-e997-480b-93bf-4543096c696b" x="391" y="67" width="130" height="1">
 			<pen lineStyle="Dotted"/>
 		</element>
-		<element kind="staticText" uuid="820a48b3-2a5e-4358-9371-10d3bc0ba05a" x="351" y="50" width="40" height="21" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="staticText" uuid="820a48b3-2a5e-4358-9371-10d3bc0ba05a" x="340" y="50" width="51" height="21" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[C.C]]></text>
 			<box>
 				<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -415,8 +415,8 @@ E-mail: construcpunto@gmail.com]]></text>
 				<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 			</box>
 		</element>
-		<element kind="line" uuid="97fb0f35-6674-4dcf-976a-a44c64af2cb8" x="591" y="44" width="1" height="33"/>
-		<element kind="staticText" uuid="a3d9da99-ce2b-40a0-9734-9b2e4f8c3016" x="592" y="45" width="189" height="32" forecolor="#B0403C" bold="true" hTextAlign="Center" vTextAlign="Middle">
+		<element kind="line" uuid="97fb0f35-6674-4dcf-976a-a44c64af2cb8" x="580" y="45" width="1" height="33"/>
+		<element kind="staticText" uuid="a3d9da99-ce2b-40a0-9734-9b2e4f8c3016" x="581" y="45" width="200" height="32" forecolor="#B0403C" fontName="Arial" bold="true" hTextAlign="Center" vTextAlign="Middle">
 			<text><![CDATA[EL EQUIPO TIENE UN ALQUILER MÍNIMO DE (5) DÍAS.]]></text>
 		</element>
 	</pageFooter>

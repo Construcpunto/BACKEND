@@ -6,6 +6,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -43,12 +44,26 @@ public class ReportService implements IReportService {
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(reportStream, params, dataSource);
 
-        if (invoice)
-            JasperExportManager.exportReportToPdfFile
-                    (jasperPrint, pathSave + "Facturas/factura_cc_" + clientCedula + "_" + timestamp + ".pdf");
-        else
-            JasperExportManager.exportReportToPdfFile
-                    (jasperPrint, pathSave + "Pagares/pagare_cc_" + clientCedula + "_" + timestamp + ".pdf");
+        if (invoice) {
+            File facturasDir = new File(pathSave, "Facturas");
+            if (!facturasDir.exists()) {
+                facturasDir.mkdirs();
+            }
+            JasperExportManager.exportReportToPdfFile(
+                    jasperPrint,
+                    facturasDir.getAbsolutePath() + "/factura_cc_" + clientCedula + "_" + timestamp + ".pdf"
+            );
+        }
+        else {
+            File pagaresDir = new File(pathSave, "Pagares");
+            if (!pagaresDir.exists()) {
+                pagaresDir.mkdirs();
+            }
+            JasperExportManager.exportReportToPdfFile(
+                    jasperPrint,
+                    pagaresDir.getAbsolutePath() + "/pagare_cc_" + clientCedula + "_" + timestamp + ".pdf"
+            );
+        }
 
         System.out.println(pathSave + "Pagares/pagare_cc:" + clientCedula + ".pdf");
 

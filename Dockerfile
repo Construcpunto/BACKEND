@@ -17,6 +17,20 @@ FROM openjdk:24-ea-21-slim-bullseye
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y \
+    fontconfig \
+    libfreetype6 \
+    fonts-dejavu \
+    fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install -y tzdata && \
+    ln -fs /usr/share/zoneinfo/America/Bogota /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+COPY ./fonts /usr/share/fonts/truetype/arial
+RUN fc-cache -fv
+
 COPY --from=builder /app/managament-equipments/target/managament-equipments-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8081
