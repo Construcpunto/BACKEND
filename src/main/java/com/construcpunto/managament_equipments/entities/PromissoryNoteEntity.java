@@ -40,7 +40,6 @@ public class PromissoryNoteEntity {
 
     public PromissoryNoteEntity() {
         this.loanEquipment = new ArrayList<>();
-        deliveryDate = LocalDate.now();
         this.deliveryPrice = 0.0;
         this.deposit = 0.0;
     }

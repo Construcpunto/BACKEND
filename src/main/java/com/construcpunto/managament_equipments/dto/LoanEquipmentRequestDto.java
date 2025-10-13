@@ -4,6 +4,7 @@ import com.construcpunto.managament_equipments.entities.ClientEntity;
 import com.construcpunto.managament_equipments.entities.DeliveryEntity;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,8 @@ public class LoanEquipmentRequestDto {
     private Double deliveryPrice;
 
     private String comments;
+
+    private LocalDate date;
 
     @NotNull
     private Map<Long, Integer> equipmentIds;
@@ -98,5 +101,13 @@ public class LoanEquipmentRequestDto {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

@@ -146,6 +146,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
 
         promissoryNote.setDeposit(loanEquipmentRequestDto.getDeposit());
         promissoryNote.setComments(loanEquipmentRequestDto.getComments());
+        promissoryNote.setDeliveryDate(loanEquipmentRequestDto.getDate());
 
         return promissoryNote;
     }

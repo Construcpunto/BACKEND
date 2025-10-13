@@ -8,7 +8,6 @@ services:
       - .env
     volumes:
       - mysql-data:/var/lib/mysql
-      - "C:/Users/juanm/Downloads/Prueba_de_Bind_Mount:/backup"
     networks:
       - construcpunto
     healthcheck:
@@ -16,7 +15,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  #    restart: always
+    restart: always
 
   mysql8-backup:
     image: fradelg/mysql-cron-backup
@@ -49,7 +48,7 @@ services:
         condition: service_healthy
     volumes:
       - "C:/Users/juanm/Downloads/Prueba_de_Bind_Mount:/app/generated-pdfs/"
-  #    restart: always
+    restart: always
 
   frontend:
     image: juanmanuel18/frontend-construcpunto:0.0.2
@@ -62,7 +61,7 @@ services:
       - construcpunto
     depends_on:
       - backend
-#    restart: always
+    restart: always
 
 
 volumes:
