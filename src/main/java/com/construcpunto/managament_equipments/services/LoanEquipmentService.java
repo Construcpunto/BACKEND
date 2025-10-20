@@ -188,7 +188,14 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         List<LoanEquipmentEntity> loanEquipmentsNoActive = new ArrayList<>();
 
         if (deliveryDate != null) {
-            promissoryNotes.addAll(promissoyNoteRepository.findByDeliveryDate(deliveryDate));
+            if (active)
+                promissoryNotes.addAll(promissoyNoteRepository.findByDeliveryDate(deliveryDate));
+            else{
+               List<InvoiceEntity> invoices = invoiceRepository.findByReturnDate(deliveryDate).orElseThrow();
+               for (InvoiceEntity inv: invoices){
+                   promissoryNotes.add(promissoyNoteRepository.findById(inv.getId()).orElseThrow());
+               }
+            }
 
         }
 
