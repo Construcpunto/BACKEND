@@ -3,6 +3,7 @@ package com.construcpunto.managament_equipments.services;
 import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
 import com.construcpunto.managament_equipments.dto.LoanEquipmentResponseDto;
 import com.construcpunto.managament_equipments.dto.PartialReturnDto;
+import com.construcpunto.managament_equipments.dto.PartialReturnEquipmentDto;
 import com.construcpunto.managament_equipments.dto.viewLoanDto;
 import com.construcpunto.managament_equipments.entities.ClientEntity;
 import com.construcpunto.managament_equipments.entities.LoanEquipmentEntity;
@@ -22,7 +23,7 @@ public interface ILoanEquipmentService {
 
     void delete(LoanEquipmentEntity loanEquipment);
 
-    void returnEquipment(Long promissoryNoteId) throws JRException;
-    void partialReturnEquipment(Long promissoryNoteId, List<PartialReturnDto> partialReturnDto) throws JRException;
+    void returnEquipment(Long promissoryNoteId, LocalDate date) throws JRException;
+    void partialReturnEquipment(Long promissoryNoteId, PartialReturnEquipmentDto request) throws JRException;
 
 }

@@ -1,8 +1,6 @@
 package com.construcpunto.managament_equipments.controllers;
 
-import com.construcpunto.managament_equipments.dto.LoanEquipmentRequestDto;
-import com.construcpunto.managament_equipments.dto.PartialReturnDto;
-import com.construcpunto.managament_equipments.dto.viewLoanDto;
+import com.construcpunto.managament_equipments.dto.*;
 import com.construcpunto.managament_equipments.services.ILoanEquipmentService;
 import jakarta.validation.Valid;
 import net.sf.jasperreports.engine.JRException;
@@ -35,15 +33,19 @@ public class LoanController {
     }
 
     @PostMapping("return-equipment/{promissoryNoteId}")
-    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId) throws JRException {
-        loanEquipmentService.returnEquipment(promissoryNoteId);
+    public ResponseEntity<?> returnEquipment(@PathVariable Long promissoryNoteId, @RequestBody ReturnEquipmentDto returnEquipmentDto)
+            throws JRException {
+        System.out.println("La fecha de retorno es:" + returnEquipmentDto.getDate());
+        loanEquipmentService.returnEquipment(promissoryNoteId, returnEquipmentDto.getDate());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("partial-return-equipment/{promissoryNoteId}")
     public ResponseEntity<?> partialReturnEquipments(@PathVariable Long promissoryNoteId,
-                                                     @RequestBody List<PartialReturnDto> partialReturnDtos) throws JRException {
-        loanEquipmentService.partialReturnEquipment(promissoryNoteId, partialReturnDtos);
+                                                     @RequestBody PartialReturnEquipmentDto request) throws JRException {
+        System.out.println("La fecha de retorno es:" + request.getDate());
+
+        loanEquipmentService.partialReturnEquipment(promissoryNoteId, request);
         return ResponseEntity.ok().build();
     }
 

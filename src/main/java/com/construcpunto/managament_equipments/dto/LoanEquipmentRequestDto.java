@@ -26,6 +26,7 @@ public class LoanEquipmentRequestDto {
 
     private String comments;
 
+    @NotNull
     private LocalDate date;
 
     @NotNull
