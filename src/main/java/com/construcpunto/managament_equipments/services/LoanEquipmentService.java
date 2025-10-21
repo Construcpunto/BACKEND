@@ -87,7 +87,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         clientRepository.save(client);
 
         paramsReport = loadParamsReport(promissoryNote.getId(), false);
-        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId(), false);
 
         reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, false);
 
@@ -118,7 +118,8 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         loanEquipment.setEquipment(equipment);
         loanEquipment.setQuantity(quantity);
         loanEquipment.setPriceDay(equipment.getUnitPrice() * quantity);
-        loanEquipment.setTotal(loanEquipment.getPriceDay() * 5);
+//        loanEquipment.setTotal(loanEquipment.getPriceDay() * 5);
+        loanEquipment.setTotal(0.0);
 
         equipment.setQuantity(equipment.getQuantity() - quantity);
 
@@ -190,11 +191,11 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         if (deliveryDate != null) {
             if (active)
                 promissoryNotes.addAll(promissoyNoteRepository.findByDeliveryDate(deliveryDate));
-            else{
-               List<InvoiceEntity> invoices = invoiceRepository.findByReturnDate(deliveryDate).orElseThrow();
-               for (InvoiceEntity inv: invoices){
-                   promissoryNotes.add(promissoyNoteRepository.findById(inv.getId()).orElseThrow());
-               }
+            else {
+                List<InvoiceEntity> invoices = invoiceRepository.findByReturnDate(deliveryDate).orElseThrow();
+                for (InvoiceEntity inv : invoices) {
+                    promissoryNotes.add(promissoyNoteRepository.findById(inv.getId()).orElseThrow());
+                }
             }
 
         }
@@ -330,7 +331,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         invoiceRepository.save(invoice);
 
         paramsReport = loadParamsReport(promissoryNote.getId(), true);
-        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId(), true);
 
         reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, true);
 
@@ -408,12 +409,12 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         promissoyNoteRepository.save(promissoryNote);
 
         paramsReport = loadParamsReport(promissoryNoteDB.getId(), true);
-        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNoteDB.getId());
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNoteDB.getId(), true);
         reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, true);
 
 
         paramsReport = loadParamsReport(promissoryNote.getId(), true);
-        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId());
+        itemsForDataSourceInvoice = loadItemsInvoice(promissoryNote.getId(), true);
         reportService.generatePromisoryNote(paramsReport, itemsForDataSourceInvoice, false);
 
 
@@ -439,11 +440,11 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             String equipmentName = loanEquipment.getEquipment().getName();
             LocalDate returnDate = null;
 
-            if(active){
+            if (active) {
                 invoice = invoiceRepository.findByPromissoryNote(loanEquipment.getPromissoryNote()).orElseThrow();
                 returnDate = invoice.getReturnDate();
             }
-            System.out.println("-------------------------" + returnDate + "/"  +"-------------------------");
+            System.out.println("-------------------------" + returnDate + "/" + "-------------------------");
 
             if (!idPromissoryNote.equals(idPromissoryNoteBack)) {
                 viewLoanDto.setCedula(cedula);
@@ -501,7 +502,7 @@ public class LoanEquipmentService implements ILoanEquipmentService {
         return params;
     }
 
-    List<InvoiceItemDto> loadItemsInvoice(Long promissoryNoteId) {
+    List<InvoiceItemDto> loadItemsInvoice(Long promissoryNoteId, Boolean isReturn) {
         InvoiceItemDto invoiceItemDto = new InvoiceItemDto();
         List<InvoiceItemDto> invoiceItemsDto = new ArrayList<>();
 
@@ -513,7 +514,11 @@ public class LoanEquipmentService implements ILoanEquipmentService {
             invoiceItemDto.setEquipmentName(loanEquipmentResponse.getLoanEquipments()[row][1]);
             invoiceItemDto.setEquipmentUnitPrice(loanEquipmentResponse.getLoanEquipments()[row][2]);
             invoiceItemDto.setLoanValueDay(loanEquipmentResponse.getLoanEquipments()[row][3]);
-            invoiceItemDto.setLoanTotal(loanEquipmentResponse.getLoanEquipments()[row][4]);
+            if(!isReturn)
+                invoiceItemDto.setLoanTotal("");
+            else
+                invoiceItemDto.setLoanTotal(loanEquipmentResponse.getLoanEquipments()[row][4]);
+
 
             invoiceItemsDto.add(invoiceItemDto);
         }
